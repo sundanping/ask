@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="../../static/css/shopping_cart.css"/>
+
+<!--begin: main-->
+<main class="main-container" ng-init="channel = 'm'" cg-busy="loadingPromise">
+    <div class="pay-way margin-left-14px border-bottom">
+        <dl class="choice-pay-way padding-left-10 ">
+            <dt class="uk-margin-top padding-left-20  font-size-18 uk-margin-bottom"><span
+                    class="padding-left-10"><i></i>付款方式</span></dt>
+            <dd class="uk-clearfix" ng-click="payType = 'ali'" ng-show="!isWxBrowser">
+                <span class="padding-left-20"><i class="icon zhifubao "></i>支付宝支付</span>
+                <a href="" class="uk-float-right uk-margin-right choice">
+                    <i ng-if="payType === 'ali'" class="uk-icon-dot-circle-o"></i>
+                    <i ng-if="payType !== 'ali'" class="uk-icon-circle-o"></i>
+                </a>
+            </dd>
+            <dd class="uk-clearfix " ng-click="payType = 'wx'">
+                <span class="padding-left-20"><i class="icon weixin"></i>微信支付</span>
+                <a href="" class="uk-float-right uk-margin-right choice">
+                    <i ng-if="payType === 'wx'" class="uk-icon-dot-circle-o"></i>
+                    <i ng-if="payType !== 'wx'" class="uk-icon-circle-o"></i>
+                </a>
+            </dd>
+
+        </dl>
+    </div>
+    <div id="pay-again-bottom">
+
+    </div>
+    <footer class="uk-grid uk-grid-collapse functional">
+        <div class="uk-width-3-4 total-price ">
+            <span class="floatRight">
+                <span style="font-family:Regular">合计</span> <span class="font-size-20">{{price}}</span>元
+             </span>
+        </div>
+        <div class="uk-width-1-4">
+            <button type="button" class="uk-button submit-order margin-left-0" ng-click="rePay()">支付</button>
+        </div>
+        <div class="footer-modal"></div>
+    </footer>
+</main>
+<!--end: main-->

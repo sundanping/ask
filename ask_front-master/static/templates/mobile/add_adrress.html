@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/form-select.min.css" />
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise" ng-init="getProvinceList()">
+    <div class="wrapper uk-margin-top" ng-init="channel='m'">
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">收货人</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" ng-model="address.name" placeholder="收货人姓名" />
+                </div>
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">手机号码</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" ng-model="address.phone" placeholder="手机号码"/>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">省份</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span>请选择省份</span>
+                        <select ng-model="address.province" ng-options="province.name for province in provinces" ng-change="getCites(address.province)">
+                            <option value="" disabled="disabled">请选择省份</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">市</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span>请选择市</span>
+                        <select ng-model="address.city" ng-options="city.name for city in cities" ng-change="getRegionList(address.city)">
+                            <option value="" disabled="disabled">请选择市</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">区</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span>请选择区</span>
+                        <select ng-model="address.region" ng-options="region.name for region in regions" ng-change="getStreetList(address.region)">
+                            <option value="" disabled="disabled">请选择区</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">街道</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span>请选择街道</span>
+                        <select ng-model="address.street" ng-options="street.name for street in streets">
+                                <option value="" disabled="disabled">请选择街道</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">具体地址</label>
+                    <input type="text" placeholder="请输入具体地址" ng-model="address.detail" class="uk-width-8-10 padding" />
+                </div>
+
+                <div class="uk-form-row uk-clearfix" ng-click="setDefaultStatust()">
+                    设为默认地址
+                    <i class="uk-float-right uk-margin-right uk-icon-circle-thin" ng-if="default === 0"></i>
+                    <i class="uk-float-right uk-margin-right uk-icon-dot-circle-o" ng-if="default === 1"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF uk-text-center uk-width-1 button-profile-wrap">
+                <button button="button" class="uk-width-1 uk-button button-profile btn-logout" ng-click="addAddress(address)">保存地址</button>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->
+
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/form-select.min.js"></script>

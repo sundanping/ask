@@ -1,0 +1,175 @@
+
+
+<link rel="stylesheet" href="../../static/css/shopping_cart.css"/>
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise" >
+    <input type="text" ng-model="channel" ng-init="channel = 'm'" style="display: none;"/>
+    <div style="display: none" ng-init="shoppingCartInit()"></div>
+
+    <div class="uk-width-9-10 uk-container-center uk-margin-top font-color-FF6600">
+
+    </div>
+    <div class="uk-width-9-10 uk-container-center uk-margin-top font-color-FF6600"></div>
+
+    <div id="shopping-cart-wrap" class="uk-margin-left wrapper">
+        <div id="shopping-cart-modal" class="change-transaction-type-mode-modal"></div>
+
+        <dl ng-if="goodsList.length<=0 || goodsList===null">
+            <div id="relative">
+                <div id="emptyShoppingCart-mobile" class="emptyShoppingCart-m">
+                    <div >
+                        <img src="../../static/img/shoppingcart.png" alt="^~^">
+                    </div>
+                    <div>
+                        <p style="width:100% " class="text-align-left">购物车还是空空的，</p>
+                        <p  style="width:100% "  class="margin-top-em  text-align-left">去看看心仪的商品吧</p>
+                        <div    class="background-color-yellow"><a href="#m/index">去首页看看</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </dl>
+        <!-- begin: 线上商品 -->
+        <div >
+            <div  class="goods-list-wrap ">
+                <!--begin: 购物清单-->
+                <dl class="list-classification ">
+
+                    <dd  ng-if="goodsList.length>0" style="border-top: 0;" class="goods-list-caption ng-if='goodsList.length>0' ">
+                        <div  class="uk-grid uk-grid-collapse">
+                            <div class="uk-width-1-3 opacity-7 padding-left-13">
+                                <i ng-if="allChecked" ng-click="checkAll()"> <img src="../../static/img/checked.png"
+                                                                                  alt=""></i>
+                                <i ng-if="!allChecked" ng-click="checkAll()"><img src="../../static/img/check-no.png"
+                                                                                  alt=""></i>
+                                <span class="opacity-7">全选</span>
+                            </div>
+                            <div class="uk-width-1-3"></div>
+                            <div style=" text-align: right; padding-right: 1em;" class="uk-width-1-3 "
+                                 ng-click="batchDel()">批量删除
+                            </div>
+                        </div>
+                    </dd>
+
+                    <dd class="uk-grid uk-grid-collapse " ng-if="!shoppingCardGoodsMsg.isInvalid" ng-repeat="shoppingCardGoodsMsg in goodsList  track by $index">
+
+                        <div class="uk-width-1-3 uk-grid uk-grid-collapse padding-left">
+                            <div class="uk-width-1-6 choice-wrap">
+                                <a  ng-click="chooseGoods($event, shoppingCardGoodsMsg)" href="" class="choice">
+                                    <i ng-if="shoppingCardGoodsMsg.choiced"> <img class="inputRadio-m" src="../../static/img/checked.png" alt=""></i>
+                                    <i ng-if="!shoppingCardGoodsMsg.choiced"><img class="inputRadio-m" src="../../static/img/check-no.png" alt=""></i>
+
+                                </a>
+                            </div>
+
+                            <div class="uk-width-3-4 thumbnail line-height-80"
+                                 ng-click="mobileGoToURL($event, '/m/product/detail/' + shoppingCardGoodsMsg.goodsSnapshot.productId)">
+                                <img class="" ng-src="{{shoppingCardGoodsMsg.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}}"></div>
+                        </div>
+
+                        <div class="uk-width-1-3">
+                            <dl class="goods-info">
+                                <dt class="margin-top-5">{{shoppingCardGoodsMsg.goodsSnapshot.nameEn }}</dt>
+                                <dd>
+                                    <span class="uk-margin-right">{{shoppingCardGoodsMsg.goodsSnapshot.goodsSnapshot[0].value}}</span>
+                                </dd>
+                                <dd class="total-price">{{shoppingCardGoodsMsg.goodsSnapshot.onlinePrice }}元</dd>
+                            </dl>
+                        </div>
+                        <a href="" class="delete text-indent-14"
+                           ng-click="deleteGoods($event, shoppingCardGoodsMsg.shoppingCartGoodsId)"><i
+                                class="uk-icon-close"></i></a>
+                        <div class="uk-cloearfix spinner uk-grid uk-grid-collapse">
+                            <button type="button" class="uk-button uk-width-1-3"
+                                    ng-click="reduceGoodsNumber($event,  shoppingCardGoodsMsg.shoppingCartGoodsId,  shoppingCardGoodsMsg.shoppingCartNum)"><i class="uk-icon-minus"></i>
+                            </button>
+                            <input type="text" readonly="readonly" class="uk-width-1-3" ng-model="shoppingCardGoodsMsg.shoppingCartNum"/>
+                            <button type="button" class="uk-button  uk-width-1-3"
+                                    ng-click="addGoodsNumber($event,  shoppingCardGoodsMsg.shoppingCartGoodsId,  shoppingCardGoodsMsg.shoppingCartNum)">
+                                <i class="uk-icon-plus"></i></button>
+                        </div>
+                    </dd>
+
+
+
+                    <!--显示失效商品  style="background-color: #f9f9f9;color:#e2e2e2;"   -->
+                    <dd style="background-color: #f8f8f8;" class="uk-grid uk-grid-collapse " ng-if="isInvalidMsg.isInvalid"  ng-repeat="isInvalidMsg in goodsList track by $index">
+
+
+                        <div class="uk-width-1-3 uk-grid uk-grid-collapse ">
+                            <div class="uk-width-1-6 choice-wrap">
+                                <a  ng-click="chooseGoods($event, shoppingCardGoodsMsg)" href="" class="choice">
+                                    <i > <img class="inputRadio-m" src="../../static/img/icon_shixiao2x.png" alt=""></i>
+                                    <!--<i ng-if="!shoppingCardGoodsMsg.choiced"><img class="inputRadio-m" src="../..
+                                    /static/img/check-no.png" alt=""></i>-->
+
+                                </a>
+                            </div>
+
+                            <div class="uk-width-3-4 thumbnail line-height-80"
+                                 ng-click="mobileGoToURL($event, '/m/product/detail/' + shoppingCardGoodsMsg.goodsSnapshot.productId)">
+                                <img class="" ng-src="{{isInvalidMsg.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}}"></div>
+                        </div>
+
+
+                        <!--<div  style="position: relative" class="uk-width-1-3 uk-grid uk-grid-collapse ">-->
+                            <!--&lt;!&ndash;<div class="uk-width-1-6 choice-wrap">&ndash;&gt;-->
+                            <!--<div style="position: absolute"  class="uk-width-1-4 thumbnail line-height-80">-->
+
+                            <!--<span style=" border: 1px solid #999;color: #333;background-color: #a3a3a3;height: 20px;margin-top: 35px;"><span style="color:#fff;word-break:break-all ">失效</span></span>-->
+                            <!--</div>-->
+
+                            <!--<div class="uk-width-3-4 thumbnail line-height-80">-->
+                                <!--<img style="margin-right:0px;" ng-src="{{isInvalidMsg.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}}"></div>-->
+                        <!--</div>-->
+
+                        <div class="uk-width-1-3">
+                            <dl style="color:#9fa3a7;" class="goods-info">
+                                <dt class="margin-top-5">{{isInvalidMsg.goodsSnapshot.name |limitTo:14 }}</dt>
+                                <dd>
+                                    <span class="uk-margin-right" ng-repeat="(labelKey, labelVal) in isInvalidMsg.goodsLabel">{{labelVal}}</span>
+                                </dd>
+                                <dd class="total-price">{{isInvalidMsg.goodsSnapshot.onlinePrice }}元</dd>
+                            </dl>
+                        </div>
+                        <a href="" class="delete text-indent-14"
+                           ng-click="deleteGoods($event, isInvalidMsg.shoppingCartGoodsId)"><i
+                                class="uk-icon-close"></i></a>
+                        <div class="uk-cloearfix  uk-grid uk-grid-collapse">
+
+                        </div>
+                    </dd>
+                    <!--END 显示失效商品-->
+
+                </dl>
+            </div>
+        </div>
+
+        <footer  ng-hide="totalNum===0"  class="uk-grid uk-grid-collapse functional">
+            <div class="uk-width-3-4 total-price-pay">
+                <span style="font-size: 12px;letter-spacing: 0;font-weight: 400 ;padding-left: 15px;">
+                已选商品<span class="color-ff4f64">(<b ng-bind="totalNum"></b>)</span>
+                   <span class="floatRight">合计
+                <span class="font-size-20">{{totalPrice |currency:''}}</span>元</span></span>
+            </div>
+
+            <div class="uk-width-1-4">
+                <a href="#/m/shopping_cart"  ng-if="totalNum>0">
+                    <button  style="margin-left: 0" type="button" class="uk-button submit-order">结算</button>
+                </a>
+                <a href="javascript:" onclick="swal('请至少选择一件商品')"  class="" ng-if="totalNum===0">
+                    <button style="margin-left: 0" type="button" class="uk-button submit-order ">结算</button>
+                </a>
+            </div>
+            <div class="footer-modal"></div>
+        </footer>
+    </div>
+    <script type="text/javascript">
+
+    var relative=document.getElementById('relative');
+    relative.style.height=(window.screen.height-140)+'px';
+    </script>
+        </main>

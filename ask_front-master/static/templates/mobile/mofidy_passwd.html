@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container">
+    <div class="wrapper uk-margin-top" ng-init="channel='m'">
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">新密码</label>
+                    <input type="password" placeholder="输入新密码" class="uk-width-2-3 uk-float-right uk-margin-right" ng-model="password" />
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">确认密码</label>
+                    <input type="password" placeholder="再输入一遍新密码" class="uk-width-2-3 uk-float-right uk-margin-right" ng-model="confirmPassword" />
+                </div>
+                <!--<ul class="uk-list fieldset-list">
+                    <li class="uk-grid">
+                        <label class="uk-width-1-4">新密码</label>
+                        <input type="password" placeholder="输入新密码" class="uk-width-3-4" ng-model="password" />
+                    </li>
+
+                    <li class="uk-grid">
+                        <label class="uk-width-1-4">确认密码</label>
+                        <input type="password" placeholder="再输入一遍新密码" class="uk-width-3-4" ng-model="confirmPassword" />
+                    </li>
+                </ul>-->
+            </fieldset>
+
+            <fieldset class="background-color-FFF uk-text-center uk-width-1 button-profile-wrap">
+                <button button="button" class="uk-width-1 uk-button button-profile" ng-click="modifyPassword(password, confirmPassword)">修改密码</button>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->

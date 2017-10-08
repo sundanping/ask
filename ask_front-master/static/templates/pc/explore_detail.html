@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="../../static/css/article.css" />
+<link rel="stylesheet" href="../../static/css/explore.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise">
+    <div class="explore-detail-wrap uk-margin-large-top">
+        <div class="uk-text-center">
+            <div class="uk-width-8-10  uk-container-center">
+                <h4>{{data.title}}</h4>
+                <div class="uk-text-left" ng-bind-html="data.content | trustHtml"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--end: main-->

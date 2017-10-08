@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="../../static/css/comment.css"/>
+
+<!--begin: main-->
+<main class="main-container user-comment" cg-busy="myPromise">
+    <div class="wrapper uk-width-8-10 uk-margin-large-top uk-container-center" ng-init="channel = 'pc'">
+
+        <form class="uk-form uk-text-center">
+
+            <!--begin: 评价商品列表-->
+            <fieldset class="uk-text-left base-comment uk-margin-top"
+                      ng-repeat="goods in data.containerList track by $index">
+                <h4 class="uk-text-left split-line title">评价产品</h4>
+
+                <div class="uk-grid product-comment">
+                    <div class="uk-width-1-3">
+                        <!--begin: product base info-->
+                        <div class="uk-clearfix product-info">
+                            <div class="uk-float-left picture-thumbnail">
+                                <img ng-src="{{goods.logoUrl}}" alt="">
+                            </div>
+                            <div class="uk-float-left info">
+                                <dl>
+                                    <dt>{{goods.goodsName}}</dt>
+                                    <!--<dd>{{product.detailName}}</dd>-->
+                                </dl>
+                            </div>
+                        </div>
+                        <!--end: product base info-->
+                    </div>
+
+                    <div class="uk-width-1-3 uk-float-left satisfaction-wrap">
+                        <dl class="padding margin-remove">
+                            <dt><span class="font-color-FCCF1C uk-margin-small-right">*</span>产品评价</dt>
+
+                            <!--begin: 已评价-->
+                            <dd class="uk-list uk-margin-top uk-grid" ng-if="isCommented">
+                                <li class="uk-grid uk-margin-left">
+                                    <i class="uk-margin-right"
+                                       ng-repeat="star in goods.rateMap.starLevelList track by $index"
+                                       ng-class="{'icon-star-o': !star.choiced, 'icon-star': star.choiced}"></i>
+                                </li>
+                            </dd>
+                            <!--end: 已评价-->
+
+                            <!--begin: 未评价 goods.isCommented-->
+                            <dd class="uk-list uk-margin-top uk-grid" ng-if="!isCommented">
+                                <li class="uk-grid uk-margin-left">
+                                    <i class="uk-margin-right"
+                                       ng-repeat="star in goods.rateMap.starLevelList track by $index"
+                                       ng-class="{'icon-star-o': !star.choiced, 'icon-star': star.choiced}"
+                                       ng-click="choiceGoodsStarLevel(goods, $index+1)"></i>
+                                </li>
+                            </dd>
+                            <!--end: 未评价-->
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="comment-goods">
+                    <!--begin: 未评价-->
+                    <textarea class="uk-width-1 padding-top padding-left" placeholder="请输入您对本产品的评价"
+                              ng-model="goods.goodsComment.comment" ng-if="!isCommented"></textarea>
+                    <!--end: 未评价-->
+
+                    <!--begin: 已评价-->
+                    <div class="uk-width-1 padding" ng-if="isCommented">
+                        <span class="uk-margin-right">评价内容：</span>{{goods.goodsComment.comment}}
+                    </div>
+                    <!--end: 已评价-->.
+                </div>
+
+                <!--begin: 上传图片 icon_Delete.png-->
+                <ul id="upload-picture-list" class="uk-list upload-picture-area commentImg">
+                    <li  ng-repeat="commentImgURL in goods.goodsComment.picUrlList">
+                        <!--onmouseout="this.getElementsByTagName('p')[0].style.display='none';"-->
+                        <!--onmouseover="this.getElementsByTagName('p')[0].style.display=''"-->
+                        <img ng-if="showImage" ng-src="{{commentImgURL}}" alt="图片格式不对"
+                        />
+                        <p style="display: none;"><img src="../../static/img/icon_Delete.png" alt="" ng-click="deleteImage(commentImgURL)"></p>
+                    </li>
+
+                    <li class="add-picture" ng-if="!isCommented">
+                        <i class="uk-icon-plus"></i>
+                        <input id="{{goods.orderGoodsId}}" data-goods-index="{{$index}}" type="file" ng-model="localPicturePath"
+                               accept="image/*"     onchange="angular.element(this).scope().uploadPicture(this)"/>
+                    </li>
+                </ul>
+                <!--end: 上传图片-->
+            </fieldset>
+            <!--start: 评价商品列表-->
+
+            <fieldset class="uk-margin-top">
+                <dl class="uk-text-left">
+                    <dd class="uk-list uk-margin-top padding-left" ng-if="!data.orderComment.isCommented">
+                        <li class="uk-grid ">
+                            <span style="line-height: 26px;">
+                                <span class="font-color-FCCF1C uk-margin-small-right">*</span>
+                                 <span>评价服务</span>
+                            </span>
+
+                            <i class="uk-margin-right uk-margin-left" ng-repeat="star in serviceRateMap.starLevelList track by $index"
+                               ng-class="{'icon-star-o': !star.choiced, 'icon-star': star.choiced}"
+                               ng-click="choiceServiceStarLevel($index+1)"></i>
+                        </li>
+                    </dd>
+
+                    <dd class="uk-list uk-margin-top uk-grid padding-left" ng-if="data.orderComment.isCommented">
+                        <li class="uk-grid ">
+                           <span style="height: 26px;line-height: 26px;font-size: 16px"> 评价服务 &nbsp;</span>  <i class="uk-margin-right" ng-repeat="star in serviceRateMap.starLevelList track by $index"
+                               ng-class="{'icon-star-o': !star.choiced, 'icon-star': star.choiced}"></i>
+                        </li>
+                    </dd>
+                </dl>
+            </fieldset>
+            <!--end: 评价商品列表-->
+            <!--begin: 评价订单-->
+            <fieldset>
+                <div style="border: 0; margin-top: -5px;margin-bottom: 14px;" class="uk-text-left uk-margin-top extend-comment">
+                    <textarea class="uk-width-1 uk-container-center padding-left padding-right comment-cotent"
+                              placeholder="请输入您对本订单的服务评价" ng-model="data.orderComment.comment"
+                              ng-if="!data.orderComment.isCommented"></textarea>
+                    <div class="uk-width-1 padding comment-cotent" ng-if="data.orderComment.isCommented">
+                        {{data.orderComment.comment}}
+                    </div>
+                </div>
+            </fieldset>
+            <!--end: 评价订单-->
+            <!--begin: 修理工-->
+            <fieldset ng-if="data.serviceProviderId">
+                <dl class="uk-text-left" ng-if="hasMechanic">
+                    <dt class="uk-h4 uk-text-left split-line title"><span
+                            class="font-color-FCCF1C uk-margin-small-right">*</span>已选择修理工(可选)
+                    </dt>
+                    <dd class="uk-margin-left uk-margin-top">{{mechanicer.mechanicName}}</dd>
+                </dl>
+                <dl class="uk-text-left" ng-if="!hasMechanic && !isCommented">
+                    <dt class="uk-h4 uk-text-left split-line title"><span
+                            class="font-color-FCCF1C uk-margin-small-right">*</span>请选择修理工
+                    </dt>
+                    <dd>
+                        <div class="uk-margin-left uk-margin-top mechanicerList-wrap">
+                            <select ng-model="data.mechanicer"
+                                    ng-options="mechanic.name for mechanic in mechanicerList">
+                                <option value="" disabled>请选择要评价的修理工</option>
+                            </select>
+                        </div>
+                    </dd>
+                </dl>
+            </fieldset>
+            <!--end: 修理工-->
+            <button type="button"
+                    class="uk-button uk-width-1-9 uk-container-center uk-margin-large-top btn-submit-comment"
+                    ng-if="!isCommented" ng-click="onCommentOrder()">提交评论
+            </button>
+        </form>
+    </div>
+</main>

@@ -1,0 +1,18 @@
+<aside id="classifition-list-modal" class="uk-modal classifition-list-modal">
+    <div class="uk-modal-dialog">
+        <ul class="uk-nav uk-nav-side uk-nav-parent-icon uk-width-1" data-uk-nav="{multiple:true}">
+            <li class="uk-parent uk-text-center" ng-repeat="category in categoryList">
+                <a href="#">{{category.categoryName}}</a>
+                <ul class="uk-nav-sub uk-grid uk-grid-collapse product-list">
+                    <li class="uk-width-1-2" ng-repeat="product in category.productList">
+                        <a href="http://www.autoask.com:18080/autoask/m/{{product.productId}}/">
+                            <img class="uk-width-2-3 uk-margin-bottom" src="{{product.logoUrl}}" alt="" />
+                            <sapn class="display-block">{{product.name}}</sapn>
+                            <sapn class="display-block">{{product.nameEn}}</sapn>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>

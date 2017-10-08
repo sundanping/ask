@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../static/css/service_list.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise">
+    <div class="uk-grid service-list-wrap">
+        <div class="uk-width-1-5 service-list-side-wrap">
+            <ul class="uk-list service-list">
+                <li ng-click="onServiceArticle($index)"  ng-repeat="service in serviceList track by $index">
+                    <a href="">{{service.title}}</a>
+
+                </li>
+            </ul>
+        </div>
+        <div class="uk-width-3-5">
+            <div class="service-content">
+                <h4 class="uk-text-center uk-margin-top">{{serviceArticle.title}}</h4>
+                <div ng-bind-html="serviceArticle.content | trustHtml"></div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/datepicker.min.css" />
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/form-select.min.css" />
+
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise">
+    <div style="display: none" ng-init="channel='m'"></div>
+    <div style="display: none" ng-init="isUserInfoEditMode=true"></div>
+
+    <div class="wrapper uk-margin-top">
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix uk-position-relative">
+                    <label class="uk-form-label uk-cleafix">头像</label>
+                    <div class="uk-float-right uk-margin-right default_avatar">
+                        <img ng-src="../../static/img/default_avatar.jpg" alt="" ng-if="!data.avatar"/>
+                        <img ng-src="{{data.avatar}}" alt="" ng-if="data.avatar"/>
+                    </div>
+                    <input type="file" id="upload-avatar" class="uk-position-absolute upload-avatar"  onchange="angular.element(this).scope().uploadPicture(this)" />
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">手机号码</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" ng-model="data.phone" />
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">昵称</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" placeholder="请设置昵称" ng-model="data.nickname" />
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">性别</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span ng-if="data.gender"  style="padding: 0 5px 0 100px;">{{data.gender}}</span>
+                        <span ng-if="!data.gender">选择性别</span>
+                        <select ng-model="data.gender">
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">出生日期</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" readonly data-uk-datepicker="{format:'YYYY-MM-DD'}"  ng-model="data.birthday" />
+                </div>
+            </fieldset>
+            <fieldset class="background-color-FFF uk-text-center uk-width-1 button-profile-wrap">
+                <button button="button" class="uk-width-1 uk-button button-profile btn-logout" ng-click="onMofidyUserInfo($event)">保存修改</button>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->
+
+<!--<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/datepicker.js"></script>-->
+<!--<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/form-select.min.js"></script>-->

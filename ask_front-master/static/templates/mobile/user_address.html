@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise" ng-init="getAddressList()">
+    <div class="wrapper uk-margin-top" ng-init="channel='m'">
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix" ng-click="goToAddAddressPage('m/user/add/address')">
+                    <label class="uk-form-label">新增地址</label>
+                    <i class="uk-icon-chevron-right uk-float-right uk-margin-right"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF padding-left padding-bottom" ng-if="addressList.length > 0">
+                <div class="uk-form-row uk-cleafix border-remove">
+                    <label class="uk-form-label">已有地址</label>
+                </div>
+
+                <div class="uk-clearfix not-empty-info-wrapper padding-top" ng-repeat="address in addressList">
+                    <div>
+                        <span class="uk-margin-right">{{address.name}}</span>
+                        <span class="uk-margin-right">{{address.phone}}</span>
+                    </div>
+
+                    <span  style="display: inline-block;margin-right:36px;" class="address-info">{{address.province}}{{address.city}}{{address.region}}{{address.street}}{{address.detail}}</span>
+                    <i class="uk-float-right uk-margin-right icon icon-close" ng-click="delectAddress($index)"></i>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->

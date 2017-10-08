@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="../../static/css/logisticsInformation.css" />
+
+<main  ng-init="channel = 'm'">
+    <h4>
+        <span class="font-size-18 color-red">物流信息</span>
+        <span id="float-right"><a href="#/m/user/order" id="backToOrder">&lt;&lt;返回订单列表</a></span>
+    </h4>
+    <article  ng-controller="logisticsInformation" id="m">
+        <div class="m-logistics">
+            <div>
+                <span >物流公司:</span>
+                <span>{{company}}</span>
+
+            </div>
+            <div>
+                <span>运单号码：</span>
+                <span>{{id}}</span>
+            </div>
+        </div>
+        <div style=" color:#fdd000; text-indent: 18px;margin-top: 1em" ng-if="ret_code<0 || ret_code==='undefined'" >
+            <!--margin: 100px 0 0 0; color: #fedd6b;" class="font-size-18  -->
+            正在通知快递公司揽件</div>
+        <div class="showLogisticsInformations">
+            <div   class="border-left-logistics margin-bottom-mobile-logistics" ng-repeat="msg in expressMessage">
+                <div></div>
+                <span style="text-indent: 0" class="margin-top-14">{{msg.context}}</span>
+                <br>
+
+                <span class="font-bolr-logistics ">{{msg.time}}</span>
+                <hr>
+            </div>
+
+        </div>
+
+
+
+    </article>
+</main>

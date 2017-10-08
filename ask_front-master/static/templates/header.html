@@ -1,0 +1,58 @@
+<header ng-controller="HeaderController">
+    <nav class="uk-navbar  uk-navbar-attached">
+        <ul class="uk-navbar-nav uk-grid uk-grid-collapse">
+            <li class="logo uk-width-1-5">
+                <a href="#m/index"><img src="../../static/img/logo.png" alt="logo" class="uk-margin-top uk-width-8-10" /></a>
+            </li>
+            <li class="uk-width-1-5 nav-search" ng-controller="SearchComponent">
+                <a href="" ng-click="visibility = !visibility"><i class="icon search"></i></a>
+                <div class="search-box" ng-show="visibility">
+                    <form class="form-search-box uk-form uk-grid uk-collapse">
+                        <input type="text" class="uk-width-2-3 input-search" name=" " value=" " placeholder="搜索产品 ">
+                        <button type="button" class="uk-width-1-3" ng-click="visibility = !visibility">搜索</button>
+                    </form>
+                </div>
+            </li>
+            <li class="uk-width-1-5">
+                <a href="#m/shopping_settlement">
+                    <i class="icon shopping-cart"></i>
+                    <div class="subtitle shopping-car-tip">（{{shoppingCartService.purchasesNum}}）</div>
+                </a>
+            </li>
+            <li class="uk-width-1-5">
+                <a href="#user-login-modal" data-uk-modal ng-if="!isLogin">
+                    <i class="icon user"></i>
+                    <div class="subtitle" ng-if="isLogin">个人中心</div>
+                </a>
+                <a href="#m/user/order" ng-if="isLogin">
+                    <i class="icon user"></i>
+                    <div class="subtitle">登录/注册</div>
+                </a>
+            </li>
+            <li class="uk-width-1-5">
+                <a href="#classifition-list-modal" data-uk-modal>
+                    <i class="icon menu"></i>
+                    <div class="subtitle">分类</div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<script>
+    /*FIX ME* */
+    $(function() {
+        $('header').find('li').on('tap', function() {
+            var $this = $(this),
+                $searchBox = $('header').find('.search-box'),
+
+                searchBoxVisibility = $searchBox.css('display') === 'block' ? true : false,
+                hasSearchBox = $this.find('div').hasClass('search-box');
+
+            if (!hasSearchBox && searchBoxVisibility) {
+                $searchBox.addClass('ng-hide');
+            }
+        });
+    });
+</script>

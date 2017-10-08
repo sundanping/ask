@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="../../static/css/order-information.css">
+<!--订单详情页-->
+<main ng-controller="orderInformation"  >
+    <div class="order-information" ng-init="channel = 'pc'" >
+        <h4>
+            <span class="font-size-18 color-red">订单信息</span>
+            <span class=" float-right-orderInfo"><a class="color-dark-info" href="#/pc/user/order" >&lt;&lt;返回订单列表</a></span>
+        </h4>
+        <div >
+            <div class="orderNumber"><span>订单号：</span><span class="font-weight-bold">{{id}}</span>
+               <span style="float: right;margin: 17px 20px 0 0 ;">{{time |limitTo:10}}</span>
+
+            </div>
+
+            <div class=" verificationCode text-indent-50 margin-bottom-50">
+                <b class="">*</b>
+                <span  class="" >服务验证码：</span>
+                <span>{{orderInformation.code || "无"}}</span>
+            </div>
+        <div class=" verificationCode text-indent-50 margin-bottom-30">
+            <b >*</b>
+            <span>商品信息</span>
+        </div>
+            <!--<div>{{orderInformation}}</div>-->
+
+            <div style="overflow:hidden;" class="margin-bottom-30">
+                <ul  class="goodsMessage  verificationCode">
+                    <li class="border-2">商品</li>
+                    <li class="border-2">商品名称</li>
+                    <li class="border-2">数量</li>
+                    <li class="border-2">单价</li>
+                    <li class="border-2">总价</li>
+                </ul>
+                <!--<div>{{orderInformation}}</div>-->
+                <ul  class="goodsMessage " ng-repeat="message in orderInformation.containerList" >
+                    <!--<li class="border-1">{{message.goodsNameEn}}</li>-->
+                    <li class="border-1"><img style=" width:45px; height:45px" ng-src="{{message.logoUrl}}" alt=""></li>
+                    <li class="border-1">{{message.goodsName}}</li>
+                    <li class="border-1">{{message.num}}</li>
+                    <li class="border-1">{{message.goodsPrice | currency :'' }}</li>
+                    <li class="border-1">{{message.goodsPrice*message.num*1 | currency :'' }}</li>
+
+                </ul>
+            </div>
+
+            <div style="overflow:hidden;" class="opacity-7">
+                <ul  class="express-fee  verificationCode">
+                    <li class="float-left"></li>
+                    <li class="float-left"></li>
+                    <li class="float-left"></li>
+                    <li class="float-left ">快递费</li>
+                    <!--<span style="opacity: 0">用用</span>-->
+                    <li class="float-left"> +{{orderInformation.deliveryFee*1 ||0 |currency:''}}元</li>
+                </ul>
+            </div>
+
+            <div style="overflow:hidden;" class="opacity-7">
+                <ul  class="express-fee  verificationCode" >
+                    <li class="float-left"></li>
+                    <li class="float-left"></li>
+                    <li class="float-left"></li>
+
+                    <li class="float-left">累计工时费</li>
+                    <li class="float-left">+{{orderInformation.serviceFee*1 ||0 |currency:''}}元</li>
+                </ul>
+            </div>
+            <div style="overflow:hidden;" class="opacity-7">
+            <ul  class="express-fee  verificationCode" >
+                <li class="float-left"></li>
+                <li class="float-left"></li>
+                <li class="float-left"></li>
+                <li class="float-left">兑换卡优惠</li>
+                <li class="float-left">-{{orderInformation.discountPrice |currency:''}}元</li>
+            </ul>
+         </div>
+            <div style="overflow:hidden;" class="margin-bottom-30">
+                <ul  class="express-fee  verificationCode">
+                    <li class="float-left"></li>
+                    <li class="float-left"></li>
+                    <li class="float-left"></li>
+                    <li class="float-left">
+
+                      <span class="">订单总额</span>
+                    </li>
+                    <li class="float-left"><span class="font-size-24">
+                        <!--{{totalgoodsPrice}}-->
+                      {{totalgoodsPrice -orderInformation.discountPrice*1+orderInformation.deliveryFee*1+orderInformation.serviceFee*1| currency :''}}</span>元
+                    </li>
+                </ul>
+            </div>
+
+            <div class="border-top margin-padding">
+                <h4 class="verificationCode margin-bottom-10 ">
+                    <b >*</b>
+                    本订单使用卡片编码</h4>
+                    <div class="margin-top-20">
+                        <span class="padding-left">兑换码：</span>
+                            <span></span>
+                        <span class="verificationCode" >{{orderInformation.cardMap.card_id}} </span>
+                    </div>
+
+            </div>
+
+            <div class="margin-padding border-top" >
+                <h4 class="margin-bottom-22 verificationCode">
+                    <b >*</b>
+                    收货信息</h4>
+                <span class="order-info-consignee padding-left"  >
+                    <span>收货人：</span>
+                    <span >{{orderInformation.orderDelivery.receiverName}}</span>
+                    <span>收货人手机号码：</span>
+                    <span>{{orderInformation.orderDelivery.receiverPhone}}</span>
+                    <span>收货人地址：</span>
+                    <span>{{orderInformation.orderDelivery.province}}{{orderInformation.orderDelivery.city}}
+                        {{orderInformation.orderDelivery.region}}{{orderInformation.orderDelivery.street}}
+                    {{orderInformation.orderDelivery.detailAddress}}</span>
+                </span>
+            </div>
+            <div class="margin-padding border-top"  >
+                <h4 class="margin-bottom-22 verificationCode">
+                    <b >*</b>
+                    服务店信息</h4>
+                <span  class="order-info-consignee padding-left">
+                   <span>服务店名称：</span>
+                    <span>{{orderInformation.serviceProviderName ||"无"}}</span>
+                    <span>服务店地址：</span>
+                    <span>{{orderInformation.serviceAddress.province ||"无"}}{{orderInformation.serviceAddress.city}}
+                        {{orderInformation.serviceAddress.region}}{{orderInformation.serviceAddress.street}}{{orderInformation.serviceAddress.detail}}</span>
+                    <span>联系电话：</span>
+                    <span>{{orderInformation.serviceProviderPhone ||"无"}}</span>
+                    <span>营业时间：</span>
+                    <span>{{orderInformation.serviceWorkingHours ||"无"}}</span>
+                </span>
+            </div>
+            <div class="margin-padding border-top">
+                <h4 class="margin-bottom-22 verificationCode"><b>*</b>发票信息</h4>
+                <span class="padding-left">
+
+                    <span>发票抬头：</span>
+                    <span class="verificationCode ">{{orderInformation.header ||"无"}}</span>
+                </span>
+            </div>
+
+        </div>
+    </div>
+</main>

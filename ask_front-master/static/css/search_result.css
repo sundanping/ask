@@ -1,0 +1,12 @@
+.search-result-wrap .search-result-list li {
+    padding: 15px 15px 15px 0;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.search-result-wrap .search-result-list li:last-child {
+    border-bottom: none;
+}
+
+.search-result-wrap .search-result-list .thumbnail img {
+    width: 100px;
+}

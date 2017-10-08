@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="/static/lib/bower_components/uikit/css/components/datepicker.min.css" />
+
+<div ng-controller="ProfileController">
+    <form class="uk-form background-color-EFEEEF profile">
+        <fieldset class="background-color-FFF padding-left padding-bottom">
+            <h4 class="padding-top"><i class="icon icon-user"></i>基本资料</h4>
+            <div class="uk-form-row uk-cleafix">
+                <label class="uk-form-label uk-cleafix">手机号码</label>
+                <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" />
+            </div>
+
+            <div class="uk-form-row uk-cleafix">
+                <label class="uk-form-label uk-cleafix">昵称</label>
+                <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" />
+            </div>
+
+            <div class="uk-form-row uk-cleafix">
+                <label class="uk-form-label uk-cleafix">性别</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">男</option>
+                <option value="">女</option>
+            </select>
+            </div>
+            <div class="uk-form-row uk-cleafix">
+                <label class="uk-form-label uk-cleafix">出生日期</label>
+                <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" data-uk-datepicker="{format:'YYYY-MM-DD'}" />
+            </div>
+
+            <div class="uk-form-row uk-cleafix">
+                <label class="uk-form-label uk-cleafix">登录密码</label>
+                <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" />
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-margin-top background-color-FFF padding-left padding-bottom">
+            <h4 class="padding-top"><i class="icon icon-car"></i>车型信息</h4>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">品牌</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">宝马</option>
+                <option value="">别克</option>
+            </select>
+            </div>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">年款</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">2012</option>
+                <option value="">2014</option>
+            </select>
+            </div>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">车型</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">宝马</option>
+                <option value="">别克</option>
+            </select>
+            </div>
+            <div class="uk-form-row" ng-if="userCar">
+                <label class="uk-form-label">已有车型</label>
+                <div class="uk-clearfix not-empty-info-wrapper padding-top">
+                    <input type="text" ng-model="userCar" class="uk-width-8-10 padding" readonly />
+                    <i class="uk-float-right uk-margin-right icon icon-close" ng-click="userCar=''"></i>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-margin-top background-color-FFF padding-left padding-bottom">
+            <h4 class="padding-top"><i class="icon icon-address"></i>收货信息</h4>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">省份</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">xxx</option>
+            </select>
+            </div>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">市</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">xxx</option>
+            </select>
+            </div>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">区</label>
+                <select class="uk-float-right uk-margin-right">
+                <option value="">xxx</option>
+            </select>
+            </div>
+            <div class="uk-form-row uk-clearfix">
+                <label class="uk-form-label uk-cleafix">具体街道</label>
+                <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" />
+            </div>
+            <div class="uk-form-row" ng-if="userAddress">
+                <label class="uk-form-label">已有地址</label>
+                <div class="uk-clearfix not-empty-info-wrapper padding-top">
+                    <input type="text" ng-model="userAddress" class="uk-width-8-10 padding" readonly />
+                    <i class="uk-float-right uk-margin-right icon icon-close" ng-click="userAddress=''"></i>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script type="text/javascript" src="/static/lib/bower_components/uikit/js/components/datepicker.min.js"></script>

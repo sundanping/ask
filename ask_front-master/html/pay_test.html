@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="productApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../static/lib/bower_components/uikit/css/uikit.min.css"/>
+    <link rel="stylesheet" href="../static/lib/bower_components/uikit/css/uikit.almost-flat.min.css"/>
+
+    <link rel="stylesheet" href="../static/lib/bower_components/uikit/css/components/slideshow.min.css"/>
+    <link rel="stylesheet" href="../static/lib/bower_components/uikit/css/components/dotnav.min.css"/>
+    <link rel="stylesheet" href="../static/lib/bower_components/uikit/css/components/slidenav.min.css"/>
+
+    <link rel="stylesheet" href="../static/css/public.css"/>
+    <link rel="stylesheet" href="../static/css/index.css"/>
+
+    <title>AutoASK</title>
+</head>
+
+<body>
+<ng-include src="'../static/templates/header.html'"></ng-include>
+
+<!--begin: banner-->
+<div class="uk-slidenav-position banner" data-uk-slideshow="{autoplay:false,animation:'swipe'}"
+     ng-controller="PayTestCtrl">
+    <ul class="uk-slideshow">
+        <li ng-click="sendPayTest()">
+            <img src="http://www.getuikit.net/docs/images/placeholder_800x400_1.jpg" width="" height="" alt="">
+        </li>
+        <li>
+            <img src="http://www.getuikit.net/docs/images/placeholder_800x400_2.jpg" width="" height="" alt="">
+        </li>
+        <li>
+            <img src="http://www.getuikit.net/docs/images/placeholder_800x400_3.jpg" width="" height="" alt="">
+        </li>
+    </ul>
+
+    <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-text-center">
+        <li data-uk-slideshow-item="0">
+            <a href=""></a>
+        </li>
+        <li data-uk-slideshow-item="1">
+            <a href=""></a>
+        </li>
+        <li data-uk-slideshow-item="2">
+            <a href=""></a>
+        </li>
+    </ul>
+</div>
+<!--end: banner-->
+
+<!--begin: main-->
+<main class="main-container">
+    <!--begin: 产品展示 --->
+    <article class="product-display">
+        <!--begin: 分类1--->
+        <section class="product-classification">
+            <h4>NEW GEN</h4>
+
+            <div class="product-list">
+                <ul class="uk-list uk-grid uk-grid-collapse" ng-controller="HomeProductListController">
+                    <li class="uk-width-1-2" ng-repeat="product in productList">
+                        <div class="product-picture"><img src="{{product.img}}"/></div>
+                        <div class="product-info">
+                            <dl>
+                                <dt>{{product.name}}</dt>
+                                <dd>{{product.detail}}</dd>
+                                <dd>{{product.price}}￥</dd>
+                            </dl>
+                            <a href="javascript:;" class="btn-buy">立即购买</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!--end: 分类1--->
+
+        <!--begin: 分类2--->
+        <section class="product-classification">
+            <h4>NEW GEN</h4>
+
+            <div class="product-list">
+                <ul class="uk-list uk-grid uk-grid-collapse" ng-controller="HomeProductListController">
+                    <li class="uk-width-1-2" ng-repeat="product in productList">
+                        <div class="product-picture"><img src="{{product.img}}"/></div>
+                        <div class="product-info">
+                            <dl>
+                                <dt>{{product.name}}</dt>
+                                <dd>{{product.detail}}</dd>
+                                <dd>{{product.price}}￥</dd>
+                            </dl>
+                            <a href="javascript:;" class="btn-buy">立即购买</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!--end: 分类2--->
+    </article>
+    <!--end: 产品展示 --->
+</main>
+<!--end: main-->
+
+<ng-include src="'../static/templates/footer.html'"></ng-include>
+</body>
+
+<script type="text/javascript" src="../static/lib/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../static/lib/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript " src="../static/lib/bower_components/angular-cookies/angular-cookies.min.js "></script>
+
+<script type="text/javascript" src="../static/lib/bower_components/uikit/js/uikit.min.js"></script>
+<script type="text/javascript" src="../static/lib/bower_components/uikit/js/components/slideshow.min.js"></script>
+
+<script type="text/javascript" src="../static/js/app.js"></script>
+<script type="text/javascript" src="../static/js/pingpp/pingpp.js"></script>
+<script type="text/javascript" src="../static/js/services/restProxyService.js"></script>
+<script type="text/javascript" src="../static/js/controllers/payTestCtrl.js"></script>
+</html>

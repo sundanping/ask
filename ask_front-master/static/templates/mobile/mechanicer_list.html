@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../../static/css/comment.css" />
+
+<!--begin: main-->
+<main class="main-container user-comment" cg-busy="myPromise" ng-init="initMechanicerList()">
+    <div class="wrapper mechanicer-list-wrap">
+        <ul class="uk-list padding-left mechanicer-list  background-color-FFF">
+            <li class="uk-clearfix padding-right padding-bottom padding-top" ng-repeat="mechanicer in mechanicerList track by $index" ng-click="choiceMechanicer($index)">
+                <span>{{mechanicer.name}}</span>
+                <i class="uk-float-right uk-icon-circle-o" ng-class="{'font-color-FCCF1C': mechanicer.choiced, 'uk-icon-dot-circle-o': mechanicer.choiced, 'font-color-9A9A9A': !mechanicer.choiced}"></i>
+            </li>
+        </ul>
+
+
+        <div class="uk-margin-top uk-text-center background-color-FFF">
+            <button class="uk-button" ng-click="submitMechanic()">确认</button>
+        </div>
+    </div>
+</main>

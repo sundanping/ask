@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container">
+    <div class="wrapper" ng-controller="ProfileOrderController">
+        <ul class="switcher-nav uk-list uk-grid uk-grid-collapse">
+            <li class="uk-width-1-2"><a href="#profile" ng-click="switcher($event)">我的资料</a></li>
+            <li class="uk-width-1-2"><a href="#order_list" ng-click="switcher($event)">我的订单</a></li>
+        </ul>
+
+        <ng-include src="template"></ng-include>
+    </div>
+</main>
+<!--end: main-->

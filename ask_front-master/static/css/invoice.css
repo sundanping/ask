@@ -1,0 +1,60 @@
+.invoice {
+    position: absolute;
+    width: 100%;
+    top: 75px;
+    left: 0;
+}
+
+.invoice .invoice-menu-list {
+    padding-left: 15px;
+}
+
+.invoice .invoice-menu-list li {
+    padding: 15px 15px 15px 0;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.invoice .invoice-menu-list li:last-child {
+    border-bottom: none;
+}
+
+.invoice .invoice-menu-list li a {
+    color: #444;
+}
+
+.invoice .invoice-menu-list li a .uk-icon-chevron-right {
+    color: #C0C0C0;
+}
+
+.invoice form fieldset {
+    padding: 15px 0 0 15px;
+}
+
+.invoice form input {
+    border: none !important;
+    text-align: right;
+}
+
+.invoice form textarea {
+    resize: none;
+    height: 100px;
+}
+
+.invoice form fieldset .uk-form-row {
+    padding: 0 15px 15px 0;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.invoice form fieldset .uk-form-row:last-child {
+    border-bottom: 0;
+}
+
+.invoice form .uk-button {
+    border-radius: 0;
+    letter-spacing: 5px;
+}
+
+.invoice form .uk-button-primary {
+    background: #fccf1b;
+    color: #363543;
+}

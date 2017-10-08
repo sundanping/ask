@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="../../static/css/invoice.css" />
+
+<main class="uk-height-1-1 background-color-EFEEEF invoice" ng-controller="InvoiceController" ng-init="getInvoice()">
+    <input type="text" ng-init="channel='m'" style="display: none" />
+
+    <form class="uk-form">
+        <fieldset class="background-color-FFF">
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <label for="" class="uk-width-1-3">公司名称</label>
+                <div class="uk-form-controls uk-width-2-3">
+                    <input type="text" class="uk-width-1-1" placeholder="请输入公司名称" ng-model="data.vatInvoice.company" />
+                </div>
+            </div>
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <label for="" class="uk-width-1-3">税号</label>
+                <div class="uk-form-controls uk-width-2-3">
+                    <input type="text" class="uk-width-1-1" placeholder="请输入税号" ng-model="data.vatInvoice.taxSerial" />
+                </div>
+            </div>
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <label for="" class="uk-width-1-3">地址</label>
+                <div class="uk-form-controls uk-width-2-3">
+                    <input type="text" class="uk-width-1-1" placeholder="请输入地址" ng-model="data.vatInvoice.address" />
+                </div>
+            </div>
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <label for="" class="uk-width-1-3">电话</label>
+                <div class="uk-form-controls uk-width-2-3">
+                    <input type="tel" class="uk-width-1-1" placeholder="请输入电话" ng-model="data.vatInvoice.phone" />
+                </div>
+            </div>
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <label for="" class="uk-width-1-3">银行</label>
+                <div class="uk-form-controls uk-width-2-3">
+                    <input type="text" class="uk-width-1-1" placeholder="请输入银行" ng-model="data.vatInvoice.bankName" />
+                </div>
+            </div>
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <label for="" class="uk-width-1-3">账号</label>
+                <div class="uk-form-controls uk-width-2-3">
+                    <input type="text" class="uk-width-1-1" placeholder="请输入账号" ng-model="data.vatInvoice.account" />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-margin-top background-color-FFF">
+            <div class="uk-form-row uk-grid uk-grid-collapse">
+                <button type="button" class="uk-button uk-button-large uk-button-primary uk-width-1-1" ng-click="submitInvoice(INVOICE_TYPE.VAT, data)">保存修改</button>
+                <button type="button" class="uk-button uk-button-large uk-width-1-1 uk-margin-top" ng-click="goToURL('m/shopping_cart')">放弃修改</button>
+            </div>
+        </fieldset>
+    </form>
+</main>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="productApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/uikit.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/uikit.almost-flat.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/slideshow.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/dotnav.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/slidenav.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/sweetalert/dist/sweetalert.css"/>
+    <link rel="stylesheet" href="../../static/lib/angular-busy/angular-busy.min.css"/>
+    <link rel="stylesheet" href="../../static/css/public.css"/>
+    <link rel="icon" href="http://www.autoask.com/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="http://www.autoask.com/favicon.ico" type="image/x-icon"/>
+    <title>AutoASK</title>
+</head>
+<body id="pc">
+<header ng-controller="HeaderController" ng-init="channel = 'pc'">
+    <nav class="uk-navbar  uk-navbar-attached">
+        <ul class="uk-navbar-nav uk-grid uk-grid-collapse uk-clearfix">
+            <li class="logo uk-width-1-10">
+                <a href="#pc/index"><img src="../../static/img/pc_logo.png" alt="logo"/></a>
+            </li>
+            <li class="uk-width-1-10 nav-search" ng-controller="SearchComponent" ng-init="channel = 'pc'"
+                ng-mouseleave="hideSearch()">
+                <a href="" ng-click="visibility = !visnibility"><i class="icon search"></i></a>
+
+                <div class="search-box" ng-show="visibility">
+                    <form class="form-search-box uk-form uk-grid uk-collapse">
+                        <input type="text" class="uk-width-2-3 input-search text-indent-search"
+                               ng-keyup="doSubmit($event)" placeholder="搜索产品"
+                               ng-model="data.content"/>
+                        <button style="cursor: pointer" type="button" class="uk-width-1-3" ng-click="submitSearch()">搜索</button>
+                    </form>
+                </div>
+                <div class="search-result-box" ng-class="{'display-block': resultVisibility}">
+                    <ul class="uk-list margin-remove" ng-if="resultList.length > 0">
+                        <li style="background-color:#fafafa;border: 1px solid #efefef;" class="uk-clearfix"
+                            ng-repeat="result in resultList"
+                            ng-click="goToURL('pc/product/intro/' + result.productId)">
+                            <div class="product-info">{{result.name}}</div>
+                        </li>
+                    </ul>
+
+                    <span class="empty-result" ng-if="resultList.length <= 0">无搜索结果</span>
+                </div>
+            </li>
+            <li class="uk-width-1-10 uk-parent category" data-uk-dropdown ng-repeat="category in categoryList" ng-cloak>
+                <a hre="">
+                    <div class="category-name-wrap">{{category.categoryName}}<span
+                            class="category-modification">+</span></div>
+                </a>
+
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-cleafix uk-nav uk-nav-navbar category-list"
+                        style=" height:124px;width:{{category.productList.length*160}}px;">
+                        <li class="uk-float-left uk-text-center" ng-repeat="product in category.productList">
+                            <a href="#pc/product/intro/{{product.productId}}">
+                                <img ng-src="{{product.logoUrl}}" alt=""/>
+                                <span class="uk-margin-top font-weight-bold font-size-14 display-block  product-name">{{product.headStr}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-width-1-10 "><a href="#/pc/about_us">了解AutoASK</a></li>
+            <li class="uk-width-1-10 uk-parent" data-uk-dropdown ng-if="user.loginState">
+                <a href="">
+                    <i class="icon user"></i>
+
+                    <div class="subtitle">个人中心</div>
+                </a>
+
+                <div class="uk-dropdown uk-dropdown-navbar userprofile-nav">
+                    <ul class="uk-cleafix uk-nav uk-nav-navbar">
+                        <li>
+                            <a href="#/pc/user/order">我的订单</a>
+                        </li>
+                        <li>
+                            <a href="#/pc/user/info">我的资料</a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="logout('pc/index')">退出登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-width-1-10" ng-if="!user.loginState">
+                <a href="#user-login-modal" data-uk-modal ng-if="!user.loginState">
+                    <i class="icon user"></i>
+
+                    <div class="subtitle">登录/注册</div>
+                </a>
+            </li>
+            <li class="uk-width-1-10"  >
+                <a href="#pc/shopping_settlement">
+                    <div class="shopping-cart-wrap">
+                        <div class="uk-clearfix shopping-car-main-title">
+                            <i class="uk-float-left icon shopping-cart"></i>
+                            <span id="aa" class="uk-float-left shopping-car-tip"
+                                  ng-cloak>（{{getNum()||0}}）</span>
+                            <!--<span class="uk-float-left">购物车</span>-->
+                        </div>
+                        <div class=" subtitle">购物车</div>
+                    </div>
+                </a>
+            </li>
+
+            <li class="uk-width-1-10 ">
+
+                <a id="fuWu" href="#pc/service/list">
+
+                    <!--<img src="../../static/img/icon_fuwu.png" style="margin-left: 40%;margin-top: 23px;" alt="">-->
+                    <p class="server-header">服务</p>
+                </a>
+                <!--</a>-->
+            </li>
+
+        </ul>
+    </nav>
+
+    <pc-user-login-modal></pc-user-login-modal>
+</header>
+
+<ng-view></ng-view>
+
+<ng-include src="'../../static/templates/pc/footer.html'"></ng-include>
+
+<script type="text/javascript" src="../../static/lib/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../../static/lib/jquery.qrcode.min.js"></script>
+
+<script type="text/javascript" src="../../static/lib/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript "
+        src="../../static/lib/bower_components/angular-cookies/angular-cookies.min.js "></script>
+<script type="text/javascript" src="../../static/lib/bower_components/angular-md5/angular-md5.min.js"></script>
+<script type="text/javascript" src="../../static/lib/angular-busy/angular-busy.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/ngtouch/build/ngTouch.min.js"></script>
+<script type="text/javascript"
+        src="../../static/lib/bower_components/ng-baidu-map/dist/angular-baidu-map.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/uikit.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/datepicker.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../../static/js/lib.js"></script>
+<script type="text/javascript" src="../../static/js/app.js"></script>
+<script type="text/javascript" src="../../static/js/services/userProxyService.js"></script>
+<script type="text/javascript" src="../../static/js/services/restProxyService.js"></script>
+<script type="text/javascript" src="../../static/js/services/shoppingCartService.js"></script>
+<script type="text/javascript" src="../../static/js/services/qrInfoProxyService.js"></script>
+<script type="text/javascript" src="../../static/js/pingpp/pingpp.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userAddressCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userCarCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userPasswordCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/invoiceCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/voucherCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/commentListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/headerCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/homeCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/classifitionListModalCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/orderListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/orderInformation.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/productDetailCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/profileOrderCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/shoppingCartCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/settlementCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userCommentCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userLoginModalCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/payQRCodeCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/productIntroCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userProfileCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/exploreListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/exploreDetailCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/serviceListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/helpRichTextCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/aboutUsCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/activityCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/logisticsInformation.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/rePayCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/components/classifitionListModalComponent.js"></script>
+<script type="text/javascript" src="../../static/js/components/mobileUserLoginModalComponent.js"></script>
+<script type="text/javascript" src="../../static/js/components/pcUserLoginModalComponent.js"></script>
+<script type="text/javascript" src="../../static/js/components/searchComponentComponent.js"></script>
+<script type="text/javascript" src="../../static/js/pc_route.js"></script>
+
+<script>
+    /*FIX ME* */
+    $(function () {
+        //重新计算pc头部搜索框、产品种类下拉样式宽度
+        var reCalcPcHeader = function () {
+            var $searchBox = $(".search-box"),
+                $searchResult = $(".search-result-box"),
+                windowWidth = $(window).width();
+            var categoryWidth = $('.category').width();
+            var $categoryList = $('.category-list');
+            var $categoryUl;
+            var $categoryLi;
+            var $categoryLiCount;
+
+            $categoryList.each(function (categoryIndex, categoryUl) {
+                $categoryUl = $(categoryUl);
+
+                $categoryLi = $categoryUl.find('li');
+                $categoryLiCount = $categoryLi.length;
+
+                $categoryLi.width(categoryWidth);
+                $categoryUl.width(categoryWidth * $categoryLiCount);
+            });
+
+            $searchBox.width(windowWidth);
+            $searchResult.width(windowWidth);
+        };
+
+        window.onload = function () {
+            reCalcPcHeader();
+        };
+
+        window.onresize = function () {
+            reCalcPcHeader();
+        };
+
+        $('header').find('li').on('tap', function () {
+            var $this = $(this),
+                $searchBox = $('header').find('.search-box'),
+                searchBoxVisibility = $searchBox.css('display') === 'block' ? true : false,
+                hasSearchBox = $this.find('div').hasClass('search-box');
+            if (!hasSearchBox && searchBoxVisibility) {
+                $searchBox.addClass('ng-hide');
+            }
+        });
+
+
+        // $('header').on('mouseleave', '.nav-search', function() {
+        //     var $searchBox = $(".search-box"),
+        //         $searchResult = $(".search-result-box");
+
+        //     if ($searchBox.css('display') === 'block') {
+        //         $searchBox.addClass('ng-hide');
+        //     }
+        //     if ($searchResult.css('display') === 'block') {
+        //         $searchResult.addClass('ng-hide');
+        //     }
+        //     console.log(1);
+        // });
+    });
+
+</script>
+</body>
+
+</html>

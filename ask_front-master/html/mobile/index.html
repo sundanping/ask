@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="productApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/uikit.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/uikit.almost-flat.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/bower_components/sweetalert/dist/sweetalert.css"/>
+    <link rel="stylesheet" href="../../static/lib/angular-busy/angular-busy.min.css"/>
+
+    <link rel="icon" href="http://www.autoask.com/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="http://www.autoask.com/favicon.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="../../static/css/public.css"/>
+    <title>AutoASK</title>
+</head>
+
+<body>
+<header ng-controller="HeaderController" class="mobile-header">
+    <nav class="uk-navbar  uk-navbar-attached">
+        <ul class="uk-navbar-nav uk-grid uk-grid-collapse">
+            <li class="logo uk-width-1-5">
+                <a href="#m/index"><img ng-src="../../static/img/logo.png" alt="logo"
+                                        class="uk-margin-top uk-width-8-10"/></a>
+            </li>
+            <li class="uk-width-1-5 nav-search" ng-controller="SearchComponent" ng-init="channel = 'm'"
+                ng-mouseleave="hideSearch()">
+                <a href="" ng-click="visibility = !visibility"><i class="icon search"></i></a>
+
+                <div class="search-box" ng-show="visibility">
+                    <form class="form-search-box uk-form uk-grid uk-collapse">
+                        <input type="text" class="uk-width-2-3 input-search" placeholder="搜索产品"
+                               ng-model="data.content"/>
+                        <button type="button" class="uk-width-1-3" ng-click="submitSearch()">搜索</button>
+                    </form>
+                </div>
+                <div style="height: 24px;line-height: 24px;" class="search-result-box "
+                     ng-class="{'display-block': resultVisibility}">
+                    <ul class="uk-list margin-remove" ng-if="resultList.length > 0">
+                        <li style="background-color:#fafafa;border: 1px solid #efefef;" class="uk-clearfix"
+                            ng-repeat="result in resultList"
+                            ng-click="goToURL('m/product/detail/' + result.productId)">
+                            <div class="product-info">{{result.name}}</div>
+                        </li>
+                    </ul>
+
+                    <span class="empty-result" ng-if="resultList.length <= 0">无搜索结果</span>
+                </div>
+            </li>
+            <li class="uk-width-1-5">
+                <a href="#/m/shopping_settlement">
+                    <i class="icon shopping-cart"></i>
+
+                    <div class="subtitle shopping-car-tip" ng-cloak>（{{getNum()||0}}）</div>
+                </a>
+            </li>
+            <li class="uk-width-1-5">
+                <a href="#m/user/order" ng-if="user.loginState">
+                    <i class="icon user"></i>
+                    <div class="subtitle">个人中心</div>
+                </a>
+                <a href="#user-login-modal" data-uk-modal ng-if="!user.loginState">
+                    <i class="icon user"></i>
+                    <div class="subtitle">登录/注册</div>
+                </a>
+            </li>
+            <li class="uk-width-1-5">
+                <a href="#classifition-list-modal" data-uk-modal>
+                    <i class="icon menu"></i>
+
+                    <div class="subtitle">分类</div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="classifition-list-modal" class="uk-modal classifition-list-modal">
+        <div class="uk-modal-dialog">
+            <ul class="uk-nav uk-nav-side uk-nav-parent-icon uk-width-1 classifition-nav" data-uk-nav>
+                <li class="uk-parent uk-text-center" ng-repeat="category in categoryList">
+                    <a href="#">{{category.categoryName}}</a>
+                    <ul class="uk-nav-sub uk-grid uk-grid-collapse product-list">
+                        <li class="uk-width-1-2" ng-repeat="product in category.productList"
+                            ng-click="onClassifitionProductDetail('m/product/detail/' + product.productId)">
+                            <a href="javascript:;">
+                                <img class="uk-width-2-3 uk-margin-bottom" ng-src="{{product.logoUrl}}" alt=""/>
+                                <sapn class="display-block">{{product.description}}</sapn>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <mobile-user-login-modal></mobile-user-login-modal>
+
+</header>
+
+<div class="mobile-main-container">
+    <ng-view></ng-view>
+</div>
+
+<script type="text/javascript" src="../../static/lib/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript" src="../../static/lib/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript"
+        src="../../static/lib/bower_components/angular-cookies/angular-cookies.min.js "></script>
+<script type="text/javascript" src="../../static/lib/bower_components/angular-md5/angular-md5.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/ngtouch/build/ngTouch.min.js"></script>
+<script type="text/javascript" src="../../static/lib/angular-busy/angular-busy.min.js"></script>
+<script type="text/javascript"
+        src="../../static/lib/bower_components/ng-baidu-map/dist/angular-baidu-map.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/uikit.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/datepicker.min.js"></script>
+<script type="text/javascript" src="../../static/lib/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../../static/js/lib.js"></script>
+<script type="text/javascript" src="../../static/js/app.js"></script>
+<script type="text/javascript" src="../../static/js/pingpp/pingpp.js"></script>
+
+<script type="text/javascript" src="../../static/js/services/userProxyService.js"></script>
+<script type="text/javascript" src="../../static/js/services/restProxyService.js"></script>
+<script type="text/javascript" src="../../static/js/services/shoppingCartService.js"></script>
+<script type="text/javascript" src="../../static/js/services/qrInfoProxyService.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/classifitionListModalCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/headerCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userLoginModalCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/searchResultCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/homeCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/commentListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/productDetailCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/shoppingCartCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/settlementCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userCarCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userPasswordCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/invoiceCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/voucherCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/orderListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/profileOrderCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userProfileCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userCommentCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/aboutUsCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/activityCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/helpRichTextCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/orderInformation.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/activeCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/logisticsInformation.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/mechanicerListCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/userAddressCtrl.js"></script>
+<script type="text/javascript" src="../../static/js/controllers/rePayCtrl.js"></script>
+
+<script type="text/javascript" src="../../static/js/components/classifitionListModalComponent.js"></script>
+<script type="text/javascript" src="../../static/js/components/mobileUserLoginModalComponent.js"></script>
+<script type="text/javascript" src="../../static/js/components/pcUserLoginModalComponent.js"></script>
+<script type="text/javascript" src="../../static/js/components/searchComponentComponent.js"></script>
+
+<script type="text/javascript" src="../../static/js/mobile_route.js"></script>
+</body>
+
+</html>

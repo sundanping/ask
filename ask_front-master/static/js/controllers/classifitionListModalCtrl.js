@@ -1,0 +1,1 @@
+function ClassifitionListModalController($scope) {}

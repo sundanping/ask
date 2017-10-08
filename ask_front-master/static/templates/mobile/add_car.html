@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/form-select.min.css" />
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise" ng-init="getCarBrandList()">
+    <div class="wrapper uk-margin-top" ng-init="channel='m'">
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">品牌</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span>请选择品牌</span>
+                        <select ng-model="car.brand" ng-options="brand.name for brand in brands" ng-change="getCarModelList(car.brand)"></select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">车型</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span>请选择车型</span>
+                        <select ng-model="car.model" ng-options="model.name for model in models" ng-change="getCarYears(car.model)"></select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">车型年份</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span></span>
+                        <select ng-model="car.year" ng-change="getDetailModels(car.model, car.year)">
+                            <option value="" selected disabled>请选择年份</option>
+                            <option value="{{year}}" ng-repeat="year in years">{{year}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row uk-clearfix">
+                    <label class="uk-form-label uk-cleafix">具体款型</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span></span>
+                        <select ng-model="car.detailModel">
+                            <option value="" selected disabled>请选择具体款型</option>
+                            <option value="{{detailModel}}" ng-repeat="detailModel in detailModels">{{detailModel}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row" ng-if="userCar">
+                    <label class="uk-form-label">已有车型</label>
+                    <div class="uk-clearfix not-empty-info-wrapper padding-top">
+                        <input type="text" ng-model="userCar" class="uk-width-8-10 padding" readonly ng-model="data.car" />
+                        <i class="uk-float-right uk-margin-right icon icon-close"></i>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF uk-text-center uk-width-1 button-profile-wrap">
+                <button button="button" class="uk-width-1 uk-button button-profile btn-logout" ng-click="addCarModel(car)">保存车型</button>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->
+
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/form-select.min.js"></script>

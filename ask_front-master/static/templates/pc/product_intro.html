@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="../../static/css/product_intro.css"/>
+
+<main cg-busy="myPromise">
+    <div class="product-intro-switcher-title-wrap uk-clearfix">
+        <a href="#/pc/product/detail/{{productId}}" class="uk-button uk-float-right btn-buy">立即购买</a>
+        <ul class="uk-subnav uk-subnav-pill uk-grid uk-grid-collapse uk-text-center uk-margin-bottom uk-float-right product-intro-switcher-title"
+            data-uk-switcher="{connect:'#product-intro-wrap'}">
+            <li class="uk-active"><a href="#">商品介绍</a></li>
+            <li><a href="#">性能参数</a></li>
+            <li><a href="#">商品评价</a></li>
+        </ul>
+    </div>
+
+    <ul id="product-intro-wrap" class="uk-switcher uk-text-center uk-margin-top uk-margin-bottom product-intro-wrap">
+        <li class="uk-active">
+            <img ng-src="{{imgUrl}}" alt="" ng-if="data.infoUrlList" ng-repeat="imgUrl in data.infoUrlList"/>
+
+            <p class="empty-tip" ng-if="!data.infoUrlList">暂无产品图片</p>
+        </li>
+        <li>
+            <img ng-src="{{imgUrl}}" alt="" ng-if="data.picUrlList" ng-repeat="imgUrl in data.picUrlList"/>
+
+            <p class="empty-tip" ng-if="!data.picUrlList">暂无产品图片</p>
+        </li>
+
+        <!-- begin: 评论列表 -->
+        <li class="uk-text-left uk-width-8-10 uk-container-center" ng-controller="CommentListController">
+            <span ng-init="initParam()"></span>
+            <span ng-init="channel='pc'"></span>
+            <div style="margin: 230px 0;text-align: center;font-size: 24px;" ng-if="commentList.length===0 ||commentList===null">暂无评价</div>
+            <ul class="uk-list comment-list">
+                <li class="" ng-repeat="comment in commentList">
+                    <div class="uk-clearfix user-info-wrap">
+                        <div class="uk-float-left usr-avatar"></div>
+                        <div class="uk-float-left uk-margin-left padding-top uk-margin-top user-info">
+                            <p>{{comment.userPhone}}</p>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="content">
+                            <span class="uk-margin-right">评论内容:</span>{{comment.comment}}
+                        </div>
+                        <div style="font-size: 13px;opacity: .8;" class="uk-margin-top">
+                            <span>{{comment.createTime}}</span>
+                            <span class="uk-margin-large-left">{{comment.goodsName}}</span>
+                        </div>
+                        <div class="uk-margin-top" ng-if="comment.replyContent !== ''">
+                            <span>回复内容：</span>
+                            <span class="uk-margin-left">{{comment.replyContent}}</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul ng-if="commentList.length>0 " class="uk-pagination ">
+                <li ng-if="nowIndex===0"  ng-click="getprompt()" class="uk-disabled "><span class="cye-lm-tag "><i class="uk-icon-angle-double-left "></i></span>
+                </li>
+                <li ng-if="nowIndex!==0"  ng-click="getCommentList(nowIndex-1)" class="uk-disabled "><span class="cye-lm-tag "><i class="uk-icon-angle-double-left "></i></span>
+                </li>
+                <li ng-repeat="page in pageNumArr track by $index">
+                    <!--<a href="javascript:;" class="active" ng-click="getCommentList($index)">{{$index+1}}</a>-->
+                    <a href="javascript:;" ng-class="{'active': $index === nowIndex}" ng-click="getCommentList($index)">{{$index+1}}</a>
+                </li>
+                <li ng-if="nowIndex!==maxNum-1" ng-click="getCommentList(nowIndex+1)"><a href="javascript:;"><i class="uk-icon-angle-double-right "></i></a></li>
+                <li ng-if="nowIndex==maxNum-1" ><a href="javascript:;"><i class="uk-icon-angle-double-right "></i></a></li>
+                <!--<li ng-if="nowIndex===maxNum"><a href="javascript:;"><i class="uk-icon-angle-double-right "></i></a></li>-->
+            </ul>
+        </li>
+        <!-- end: 评论列表 -->
+    </ul>
+</main>

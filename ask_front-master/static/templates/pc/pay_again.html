@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="../../static/css/shopping_cart.css"/>
+
+
+<!--begin: main-->
+<main class="main-container" ng-init="channel = 'pc'" cg-busy="loadingPromise">
+    <div style="padding: 70px 5%;">
+        <span class="font-size-18 font-weight-bold margin-bottom ">选择支付方式</span>
+        <div class="uk-clearfix uk-margin-large-top pay-way-wrapper">
+            <div class="uk-float-left uk-margin-left padding-left choice-pay-way">
+                <ul style="margin-left: -30px" class="uk-grid uk-text-center pay-type-list">
+                    <li class="uk-width-2-5" ng-click="payType = 'ali'" ng-class="{'active': payType === 'ali'}">
+                        <i class="icon icon-zhifubao-pay"></i>
+                    </li>
+                    <li class="uk-width-2-5" ng-click="payType = 'wx'" ng-class="{'active': payType === 'wx'}">
+                        <i class="icon icon-weixin-pay"></i>
+                    </li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 200px">
+                <span>
+                        <span class="payAtOnce" ng-click="rePay()">立即支付</span> &nbsp;&nbsp;
+                        <span class="floatRight line-height-60">总价
+                        <span class="font-size-24 font-weight-bold "> {{price | currency : ''}}</span><b>元</b></span>
+                    </span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--end: main-->

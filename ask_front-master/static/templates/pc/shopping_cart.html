@@ -1,0 +1,398 @@
+<link rel="stylesheet" href="../../static/css/shopping_cart.css"/>
+<!--begin: main-->
+<main class="main-container uk-width-9-10 uk-container-center" cg-busy="myPromise">
+    <input type="text" ng-model="channel" ng-init="channel = 'pc'" style="display: none;"/>
+
+    <!--<dl ng-show="shoppingCartGoods.onLine.length == 0">-->
+        <!--<div class="emptyShoppingCart">-->
+            <!--<div>-->
+                <!--<p>购物车还是空空的，去看看心仪的商品吧~</p>-->
+                <!--<p><a href="#pc/index">去首页看看</a>-->
+                <!--<p/>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</dl>-->
+
+    <div class="wrapper" >
+
+        <div>
+            <div>
+                <span class="shoppingAddress ">收货地址</span>
+                <p class="addShoppingAddress font-size-16 cursor" ng-click="displayAddressModal2($event)">新增/修改地址</p>
+            </div>
+            <div>
+
+                <p  class="showAddress  font-size-16">
+                    <img src="../../static/img/icon_address2x.png" alt=""> {{onlineAddress.name}} &nbsp;&nbsp;{{onlineAddress.phone}}
+                    &nbsp; &nbsp;
+                    {{onlineAddress.province}}{{onlineAddress.city}}{{onlineAddress.region}}{{onlineAddress.street}}
+                    {{onlineAddress.detail}}
+                </p>
+            </div>
+            <div>
+                <p class="makeSureOrder font-weight-bold ">确认订单信息</p>
+                <div class="orderFormTitle ">
+                    <div class="col-3 ">商品信息</div>
+                    <div class="col-3">单价</div>
+                    <div class="col-3">数量</div>
+                    <div class="col-3 ">总价</div>
+                </div>
+                <div ng-if="goods.choiced" ng-class="goods.choiced ?'orderForm':'clear-both'"
+                     ng-repeat="goods in goodsListForPay track by $index">
+                    <!--<div>{{shoppingCartGoods}}</div>-->
+                    <div ng-if="goods.choiced">
+                        <div class="col-3 center">{{goods.goodsSnapshot.name}}</div>
+                        <div class="col-3 center">{{goods.goodsSnapshot.onlinePrice |currency: ''}}</div>
+                        <div class="col-3 center">{{goods.shoppingCartNum}}</div>
+                        <div class="col-3 center fon">{{goods.goodsSnapshot.onlinePrice * goods.shoppingCartNum |currency:''}} 元</div>
+                    </div>
+                </div>
+            </div>
+            <div class="floatRight margin20">
+                商品总计：<span class="allGoodsPrice">{{snapshotTotalPrice | currency : ''}} 元</span>
+            </div>
+            <!--<br>-->
+            <div class="margin80 ">
+                <span class="shoppingAddress marginingRight50">是否选择服务店服务 ?</span>
+
+                <img class="transform-small" src="../../static/img/radio_pre.png" alt="" ng-if="serveChecked"
+                     ng-value="true" ng-click="chooseServe(true,$event)">
+                <img class="transform-small" src="../../static/img/radio_no.png" alt="" ng-if="!serveChecked"
+                     ng-value="true" ng-click="chooseServe(true,$event)">
+                <span class="font-size-18">是</span> &nbsp;&nbsp;&nbsp;
+
+                <img class="transform-small" src="../../static/img/radio_pre.png" alt="" ng-if="!serveChecked"
+                     ng-value="false" ng-click="chooseServe(false,$event)">
+                <img class="transform-small" src="../../static/img/radio_no.png" alt="" ng-if="serveChecked"
+                     ng-value="false" ng-click="chooseServe(false,$event)">
+                <span class="font-size-18">否</span>
+
+                <div ng-show="serveChecked">
+                    <div class="uk-clearfix status-bar">
+                        <div  class="   shopping-cart-address-relative " style="margin-top: 15px">
+                            <dl class="uk-float-left ">
+                                <dt class="serverShopName">服务店名称</dt>
+                            </dl>
+                            <!--获取到服务店名称-->
+                            <span style="font-size: 18px" class="serviceProviderInfoName " ng-bind="serviceProviderInfo.name"></span>
+                            <span class="changeServer cursor color-yellow font-size-18"
+                                  ng-click="displayAddressModal()">修改</span>
+                            <span class="color-yellow font-size-18  cursor"
+                                  ng-click="chooseServe(false)">取消</span>
+                        </div>
+                        <div id="fee-server">
+                            <p class="changeOilManHour margin-left-18px  text-padding-left-20">
+                    <span ng-repeat="serviceItem in serviceFeeList" class="inputRadio" ng-model="serverMarker">
+                         <span>{{serviceItem.productCategoryName}}工时费{{serviceItem.categoryServiceFee}}元</span>
+                    </span>
+                            </p>
+                        </div>
+                        <!--服务店名称显示-->
+                        <div class="uk-float-right total-price-bar uk-text-right">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <!--<div></div>-->
+            <!--<div ng-if="!showServer" class="height30"> </div>-->
+            <div class="margin-top-20">
+                <ul class="uk-list">
+                    <li class="uk-clearfix">
+                        <span class="font-size-18 font-weight-bold   ">普通发票</span>
+                        <span class="font-size-16  padding-left-40  riseHead">{{ " 抬头：&nbsp;" + invoice.commonInvoice.header}}</span>
+                        <a href="#add-invoice-modal"
+                           class="font-color-423D3D margin-left-56  margin-left-20 color-yellow font-size-18"
+                           data-uk-modal> 编辑</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div style="margin-bottom: -34px">
+                <span class="font-size-18 font-family  font-weight-bold">产品兑换卡</span>
+                <input type="text" placeholder="请输入卡号" class="uk-margin-large-left redeemCode" ng-model="data.cardId"/>
+                <a href="" class="font-color-423D3D button  font-size-16  addRedeemCode" ng-click="submitVoucher(data)">
+                    添加</a>
+                <!--begin: 产品兑换卡列表-->
+                <div class="uk-margin-top uk-margin-large-bottom">
+                    <dl>
+                        <dt class="uk-clearfix padding-top padding-bottom padding-right text-normal font-size-16"
+                            ng-show="usedGoodsList.length > 0">已有产品兑换卡
+                        </dt>
+                        <dd class="uk-width-2-3 uk-clearfix padding-top padding-bottom"
+                            ng-repeat="usedGoods in usedGoodsList track by $index" style="width: 540px;">
+                            <span class="uk-margin-right">兑换码：{{usedGoods.serial}} ，</span>
+                            <span class="uk-margin-right">{{usedGoods.goodsName}} ，</span>
+                            <span>已优惠 <span name="goodsPrice">{{usedGoods.goodsPrice}}</span>元</span>
+                            <i class="uk-float-right icon icon-close icon-delete-card"
+                               ng-click="removeSerial($index)"></i>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <span class="font-size-18 font-weight-bold margin-bottom ">选择支付方式</span>
+            <div class="uk-clearfix uk-margin-large-top pay-way-wrapper">
+                <div class="uk-float-left uk-margin-left padding-left choice-pay-way">
+                    <ul style="margin-left: -30px" class="uk-grid uk-text-center pay-type-list">
+                        <li class="uk-width-2-5" ng-click="payType= 'ali'"
+                            ng-class="{'active': payType === 'ali'}"><i
+                                class="icon icon-zhifubao-pay"></i></li>
+                        <li class="uk-width-2-5" ng-click="payType='wx'" ng-class="{'active': payType === 'wx'}"><i
+                                class="icon icon-weixin-pay"></i></li>
+                    </ul>
+                </div>
+
+                <div style="margin-top:110px;float:right;" class="">
+                    <div class="color9fa3a7"
+                         ng-class="(snapshotTotalPrice >= freeAmount && originExpressFee>0 &&textLineThrough=== -1)?'line-through':null">
+                        +快递费：{{originExpressFee |currency:''}} 元
+                    </div>
+                    <div class="color-yellow margin-bottom-10 text-right">全场商品满{{freeAmount}}元免邮，{{noFee}}除外</div>
+                    <div ng-if="serveChecked" class="color9fa3a7 margin-bottom-10">+累计工时费：{{serviceFee}} 元</div>
+                    <div class="color9fa3a7">-兑换码优惠金额：{{discountTotalPrice}} 元</div>
+
+                    <br>
+                </div>
+            </div>
+            <span>
+            <span class="payAtOnce cursor" ng-click="submitOrder($event)">立即支付</span> &nbsp;&nbsp;
+            <span class="floatRight line-height-60">总计
+            <span class="font-size-24 font-weight-bold "> {{snapshotTotalPrice*1 + expressFee*1 + serviceFee*1 - discountTotalPrice*1 | currency : ''}}</span><b>元</b></span>
+        </span>
+        </div>
+    </div>
+    <!-- begin: set address modal-->
+    <div id="choice-service-address" class="uk-modal user-login-modal choice-service-address-modal">
+        <div class="uk-modal-dialog padding-left">
+            <ul id="switcher-choice-service-address"
+                class="uk-subnav uk-subnav-pill uk-grid uk-grid-collapse uk-text-center uk-margin-bottom uk-position-relative switcher-title"
+                data-uk-switcher="{connect:'#choice-service-address-modal'}">
+                <li  class="uk-active font-weight-bold  font-size-18 uk-width-2-5 uk-margin-left">
+                    <a style="width: 100px;line-height:16px; border-left: 4px solid #fec42f" class="" href="#">
+                    选择服务店</a>
+                </li>
+            </ul>
+
+            <button type="button " style="background-color: #fff;" class="uk-width-1-5 uk-button btn-confirm hover-yellow"
+                    ng-click="onCloseChoiceServiceAddress($event)">X
+            </button>
+
+            <ul id="choice-service-address-modal" class="uk-switcher">
+                <li>
+                    <form class="uk-form uk-grid">
+                        <div class="uk-width-1-2">
+                            <fieldset class="padding-left padding-right uk-position-relative uk-grid">
+                                <div class="uk-grid">
+                                    <div class="uk-width-1-3 padding-remove-left">
+                                        <select class="uk-width-1 border-radius-remove"
+                                                ng-model="servicePointAddressTmp.province"
+                                                ng-options="province.name for province in provinces"
+                                                ng-change="onGetCities($event, servicePointAddressTmp.province)">
+                                            <option value="" disabled selected>选择省份</option>
+                                        </select>
+                                    </div>
+                                    <div class="uk-width-1-3">
+                                        <select class="uk-width-1 border-radius-remove"
+                                                ng-model="servicePointAddressTmp.city"
+                                                ng-options="city.name for city in cities"
+                                                ng-change="onGetRegion($event, servicePointAddressTmp.city)">
+                                            <option value="" disabled selected>选择市</option>
+                                        </select>
+                                    </div>
+                                    <div class="uk-width-1-3">
+                                        <select class="uk-width-1 border-radius-remove"
+                                                ng-model="servicePointAddressTmp.region"
+                                                ng-options="region.name for region in regions"
+                                                ng-change="onGetServiceProvider($event)">
+                                            <option value="" disabled selected>选择区</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="uk-margin-left uk-margin-top uk-margin-bottom uk-text-danger"
+                                      ng-if="serviceProviders.length <= 0">
+                                <span>所选地址没有服务店</span>
+                            </fieldset>
+                            <!--<p class="address-sub-info ">{{serviceProvider.name}} &nbsp;&nbsp;{{serviceProvider.serviceProviderPhone}}</p>-->
+
+                            <fieldset style="height: 280px;  overflow-y: scroll" class="padding-left padding-right uk-margin-top"
+                                      ng-if="serviceProviders.length > 0">
+                                <ul class="uk-list address-list uk-modal-close">
+                                    <li  ng-repeat="serviceProvider in serviceProviders track by $index"
+                                        ng-click="onChoicedServiceProvider($event, $index)" >
+                                        <div style="width: 4%;display: inline-block"><i class="uk-icon-dot-circle-o " ng-if="serviceProvider.choiced"></i>
+                                            <i class="uk-icon-circle-o " ng-if="!serviceProvider.choiced"></i>
+                                        </div>
+                                        <div style="width: 90%;display: inline-block" class="address padding-left ">
+                                            <div class=" address-main-info">{{serviceProvider.name}} &nbsp;(营业时间：{{serviceProvider.workingHours}})</div>
+
+                                            <p style="padding: 0;" class="address-sub-info">
+                                                {{serviceProvider.address.province}}{{serviceProvider.address.city}}
+                                                {{serviceProvider.address.region}}{{serviceProvider.address.street}}{{serviceProvider.address.detail}}
+                                            </p>
+                                            <p class="address-sub-info no-padding-left">{{serviceProvider.phone}}
+                                            </p>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <div ng-init="initMap()">
+                                <baidu-map options="mapOptions" center="mapOptions.center"
+                                           style="width:420px;height:320px">
+                                    <marker latlng="mapOptions.markers">
+                                        <h1>{{mapOptions.markers.title}}</h1>
+                                        <p>{{mapOptions.markers.content}}</p>
+                                    </marker>
+                                </baidu-map>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div id="choice-service-address2" class="uk-modal user-login-modal choice-service-address-modal">
+        <div class="uk-modal-dialog padding-left">
+            <ul id="switcher-choice-service-address2"
+                class="uk-subnav uk-subnav-pill uk-grid uk-grid-collapse uk-text-center uk-margin-bottom uk-position-relative switcher-title"
+                data-uk-switcher="{connect:'#choice-service-address-modal2'}">
+                <!--<li class=" uk-width-1-5 uk-margin-left"><a href="#">选择服务店</a></li>-->
+                <li class="uk-active uk-width-1-5  font-weight-bold font-size-18 uk-margin-left "><a
+                        style="width: 110px" href="#">
+                    <div  class="leftYellowLine "></div>
+                    选择收货地址</a></li>
+                <li id="" ng-click="onCloseChoiceServiceAddress($event)" class="iconCloseRight  uk-modal-close hover-yellow ">X</li>
+                <!-- ng-click="onCloseChoiceServiceAddress($event)" -->
+                <!--<i class="icon-close"></i>-->
+            </ul>
+            <ul>
+                <li>
+
+                    <form  class="uk-form">
+                        <fieldset style="max-height: 290px;overflow-y: scroll;"  ng-click="onCloseChoiceServiceAddress($event)"
+                                  class="padding-left padding-right uk-margin-top ">
+                            <ul class="uk-list margin-left-30px address-list uk-modal-close">
+                                <!--ng-click="onCloseChoiceServiceAddress($event)"-->
+                                <li class="padding-top padding-bottom padding-left     "
+                                    ng-repeat="address in addressList track by $index"
+                                    ng-click="onChoicedOnlineAddress($event, $index)">
+
+                                    <div  class="address padding-left">
+                                        <p class="address-main-info">
+                                            <i ng-click="onChoicedOnlineAddress($event, $index)"  ng-if="!address.choiced" class="uk-modal-close uk-icon-circle-o"></i>
+                                            <i ng-click="onChoicedOnlineAddress($event, $index)" ng-if="address.choiced" class="uk-modal-close uk-icon-dot-circle-o"></i>
+                                            <span class="uk-margin-right">{{address.name}}</span>
+                                            <span class="uk-margin-right">{{address.phone}}</span>
+                                            {{address.province}}{{address.city}}{{address.region}}{{address.street}}{{address.detail}}
+                                        </p>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </fieldset>
+                        <div class="addNewAddress">
+                            <span>添加新地址</span>
+                            <button class=" button-add uk-float-right" ng-click="addAddress($event)">添加</button>
+                            <!-- uk-width-1-12 border-radius-remove btn-add-address-->
+                        </div>
+                        <br>
+                        <fieldset>
+                            <div>
+                                <span>收货人</span>
+                                <input type="text" placeholder="请输入收货人" class="width20 margin-left-20"
+                                       ng-model="onlineAddressTmp.name"/>
+
+                                <span class="margin-left-10 margin-left-108">联系电话</span>
+                                <input type="text" class="width20 margin-left-20" placeholder="请输入11位手机号码"
+                                       pattern="[1]{1}[0-9]{10}" ng-model="onlineAddressTmp.phone"/>
+                            </div>
+                            <br>
+                            <div>
+                                <span class="margin-right-x ">地址 </span>
+                                <select class=" border-radius-remove margin-left-13"
+                                        ng-model="onlineAddressTmp.province"
+                                        ng-options="province.name for province in provinces"
+                                        ng-change="onGetCities($event, onlineAddressTmp.province)">
+                                    <option value="" disabled selected>选择省份</option>
+                                </select>
+                                <select class=" margin-left-select border-radius-remove"
+                                        ng-model="onlineAddressTmp.city" ng-options="city.name for city in cities"
+                                        ng-change="onGetRegion($event, onlineAddressTmp.city)">
+                                    <option value="" disabled selected>选择市</option>
+                                </select>
+                                <select class="margin-left-select border-radius-remove"
+                                        ng-model="onlineAddressTmp.region"
+                                        ng-options="region.name for region in regions"
+                                        ng-change="onGetStreet($event, onlineAddressTmp.region)">
+                                    <option value="" disabled selected>选择区</option>
+                                </select>
+                                <select class=" margin-left-select border-radius-remove "
+                                        ng-model="onlineAddressTmp.street"
+                                        ng-options="street.name for street in streets">
+                                    <option value="" disabled selected>选择街道</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div>
+                                <input type="text" class=" add-detail  border-radius-remove" placeholder="输入具体地址"
+                                       ng-model="onlineAddressTmp.detail"/>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- end: set address modal -->
+
+    <!--begin: 发票-->
+    <div id="add-invoice-modal" class="uk-modal user-login-modal  choice-service-address-modal-pc   choice-service-address-modal invoice-modal">
+        <div class="uk-modal-dialog padding-left">
+            <ul class="uk-subnav uk-subnav-pill uk-grid uk-grid-collapse uk-text-center uk-margin-bottom uk-position-relative switcher-title"
+                data-uk-switcher="{connect:'#invoice-container'}">
+                <li class="uk-active uk-width-1-5 uk-margin-left"><a href="#">普通发票</a></li>
+                <!--<li class="uk-width-1-5"><a href="#">增值税发票</a></li>-->
+            </ul>
+            <ul id="invoice-container" class="uk-switcher">
+                <li class="uk-active">
+                    <form class="uk-form uk-form-horizontal">
+                        <div class="uk-form-row">
+                            <label class="uk-form-label">发票抬头</label>
+                            <div class="uk-form-controls">
+                                <input type="text" placeholder="请输入发票抬头" ng-model="invoice.commonInvoice.header"/>
+                            </div>
+                        </div>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label">发票内容</label>
+                            <div class="uk-form-controls">
+                                <input type="text" placeholder="请输入发票内容" value="明细" readonly/>
+                            </div>
+                        </div>
+                        <div class="uk-form-row">
+                            <button type="button" class="uk-button uk-button-large uk-button-primary uk-margin-right"
+                                    ng-click="submitInvoice('common', invoice)">保存
+                            </button>
+                            <button type="button" class="uk-button uk-button-large" ng-click="hideInvoiceModal()">取消
+                            </button>
+                        </div>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!--end: 发票-->
+</main>

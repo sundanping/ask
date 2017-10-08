@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/datepicker.min.css" />
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/form-select.min.css" />
+
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise">
+    <div class="wrapper">
+        <ul class="switcher-nav uk-list uk-grid uk-grid-collapse">
+            <li class="uk-width-1-2"><a class="active" href="#m/user/info">我的资料</a></li>
+            <li class="uk-width-1-2"><a href="#/m/user/order">我的订单</a></li>
+        </ul>
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF  padding-top padding-left padding-bottom">
+                <!--<h4 class="padding-top">-->
+                    <!--<i class="icon icon-user"></i>基本资料-->
+                    <!--<button class="uk-button btn-submit" ng-if="isUserInfoEditMode" ng-touchstart="onMofidyUserInfo($event)">保存</button>-->
+                    <!--<button class="uk-button btn-modify" ng-if="!isUserInfoEditMode" ng-touchstart="onMofidyUserInfo($event)">编辑</button>-->
+                <!--</h4>-->
+                <!--<div class="uk-form-row uk-cleafix">-->
+                    <!--<label class="uk-form-label uk-cleafix">手机号码</label>-->
+                    <!--<input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" ng-if="isUserInfoEditMode" ng-model="data.phone" />-->
+                    <!--<input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" ng-if="!isUserInfoEditMode" readonly ng-model="data.phone" />-->
+                <!--</div>-->
+
+                <!--<div class="uk-form-row uk-cleafix">-->
+                    <!--<label class="uk-form-label uk-cleafix">昵称</label>-->
+                    <!--<input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" placeholder="请设置昵称" ng-if="isUserInfoEditMode" ng-model="data.nickname" />-->
+                    <!--<input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" placeholder="请设置昵称" ng-if="!isUserInfoEditMode" readonly ng-model="data.nickname" />-->
+                <!--</div>-->
+
+                <!--<div class="uk-form-row uk-cleafix">-->
+                    <!--<label class="uk-form-label uk-cleafix">性别</label>-->
+
+                    <!--<div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select ng-if="isUserInfoEditMode">-->
+                        <!--<span></span>-->
+                        <!--<select ng-model="data.gender">-->
+                            <!--<option value="男">男</option>-->
+                            <!--<option value="女">女</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+
+                    <!--<div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select ng-if="!isUserInfoEditMode">-->
+                        <!--<span></span>-->
+                        <!--<select ng-model="data.gender" disabled>-->
+                            <!--<option value="男">男</option>-->
+                            <!--<option value="女">女</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-form-row uk-cleafix">-->
+                    <!--<label class="uk-form-label uk-cleafix">出生日期</label>-->
+                    <!--<input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" readonly data-uk-datepicker="{format:'YYYY-MM-DD'}" ng-if="isUserInfoEditMode" ng-model="data.birthday" />-->
+                    <!--<input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" placeholder="请设置生日" ng-if="!isUserInfoEditMode" readonly ng-model="data.birthday" />-->
+                <!--</div>-->
+                <!--<div class="uk-form-row uk-cleafix" ng-touchstart="goToPage('m/user/modify/password')">-->
+                <div class="uk-form-row uk-cleafix" ng-click="goToPage('m/user/base_info')">
+                    <label class="uk-form-label"><i class="icon icon-user"></i>基本资料</label>
+                    <i class="uk-icon-chevron-right uk-float-right uk-margin-right"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix" ng-click="goToPage('m/user/modify/password')">
+                    <label class="uk-form-label"><i class="uk-icon-unlock-alt"></i>修改密码</label>
+                    <i class="uk-icon-chevron-right uk-float-right uk-margin-right"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF padding-left padding-bottom" ng-click="goToPage('m/user/car')">
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label"><i class="icon icon-car"></i>车型信息</label>
+                    <i class="uk-icon-chevron-right uk-float-right uk-margin-right"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix" ng-click="goToPage('m/user/address')">
+                    <label class="uk-form-label"><i class="icon icon-address"></i>收货地址</label>
+                    <i class="uk-icon-chevron-right uk-float-right uk-margin-right"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF uk-text-center uk-width-1 button-profile-wrap">
+                <button button="button" class="uk-width-1 uk-button button-profile btn-logout" ng-click="logout('m/index')">退出登录</button>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->
+
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/form-select.min.js"></script>

@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="../../static/css/shopping_cart.css"/>
+
+<!--begin: main-->
+<main class="main-container uk-width-9-10 uk-container-center" cg-busy="">
+    <input type="text" ng-model="channel" ng-init="channel = 'pc'" style="display: none;"/>
+    <div class="wrapper">
+        <dl ng-if="goodsList.length<=0 ||goodsList=== null">
+            <div class="emptyShoppingCart">
+                <div>
+                    <p>购物车还是空空的，去看看心仪的商品吧~</p>
+                    <p><a href="#pc/index">去首页看看</a>
+                    <p/>
+                </div>
+            </div>
+        </dl>
+        <dl    class="uk-margin-large-top list-classification">
+            <dt ng-if="goodsList.length>0"  class="uk-grid uk-grid-collapse padding-top padding-bottom ">
+                <div class="uk-width-1-7 cursor">
+                    <i ng-if="allChecked" ng-click="checkAll()" class=" margin-left-32 "  >
+                        <img src="../../static/img/checked.png" alt=""></i>
+
+                    <i ng-if="!allChecked" ng-click="checkAll()" class=" margin-left-32 "  >
+                        <img src="../../static/img/check-no.png" alt=""></i>
+
+
+                    <span class="opacity-7 font-check">全选</span>
+                </div>
+                <div class="uk-width-2-7 font-weight-bold text-align-center ">
+                    商品信息
+                </div>
+                <div class="uk-width-1-7 font-weight-bold uk-text-center">单价</div>
+                <div class="uk-width-1-7 font-weight-bold uk-text-center">数量</div>
+                <div class="uk-width-1-7 font-weight-bold uk-text-center">总价</div>
+                <div class="uk-width-1-7 font-weight-bold uk-text-center">操作</div>
+            </dt>
+            <!--{{shoppingCartGoods}}-->
+            <!--显示商品-->
+            <dd ng-if="!shoppingCardGoodsMsg.isInvalid" class="uk-list uk-grid uk-grid-collapse"
+                ng-repeat="shoppingCardGoodsMsg in goodsList track by $index">
+                <div class="uk-width-1-7  uk-grid uk-grid-collapse">
+                    <div class="uk-width-3-4 choice-wrap margin-left-32">
+                        <a href="" class="choice" ng-click="chooseGoods($event, shoppingCardGoodsMsg)">
+                            <i ng-if="shoppingCardGoodsMsg.choiced"> <img src="../../static/img/checked.png" alt=""></i>
+                            <i ng-if="!shoppingCardGoodsMsg.choiced"><img src="../../static/img/check-no.png" alt=""></i>
+                        </a>
+                    </div>
+                    <div class=" thumbnail line-height-80"
+                         ng-click="mobileGoToURL($event, '/pc/product/detail/' + shoppingCardGoodsMsg.goodsSnapshot.productId)">
+                    </div>
+                </div>
+                <div class="uk-width-2-7 uk-clearfix product-info">
+                    <div class="uk-float-left thumbnail uk-margin-right"
+                         ng-click="goToURL('/pc/product/intro/' +shoppingCardGoodsMsg.goodsSnapshot.productId)">
+                        <img ng-src="{{shoppingCardGoodsMsg.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}}" alt="">
+                    </div>
+                    <div class="uk-float-left goods-info">
+                        <p style="word-break: break-all">{{shoppingCardGoodsMsg.goodsSnapshot.nameEn }}</p>
+                        <p style="word-break: break-all">{{shoppingCardGoodsMsg.goodsSnapshot.goodsSnapshotInfoList[0].value }}
+                            {{shoppingCardGoodsMsg.goodsSnapshot.goodsSnapshotInfoList[1].value }}
+                        </p>
+
+                    </div>
+                </div>
+                <div class="uk-width-1-7 uk-text-center">{{shoppingCardGoodsMsg.goodsSnapshot.onlinePrice |currency: ''}}元</div>
+                <!--{{goods.productCategoryId}}-->
+                <div class="uk-width-1-7 uk-text-center">
+                    <div class="uk-cloearfix spinner uk-grid uk-grid-collapse uk-container-center">
+                        <button type="button" class="uk-button uk-width-1-3"
+                                ng-click="reduceGoodsNumber($event, shoppingCardGoodsMsg.shoppingCartGoodsId,  shoppingCardGoodsMsg.shoppingCartNum)"><i class="uk-icon-minus"></i>
+                        </button>
+                        <input type="text" readonly="readonly" class="uk-width-1-3 border-none" ng-model="shoppingCardGoodsMsg.shoppingCartNum"/>
+                        <button type="button" class="uk-button  uk-width-1-3"
+                                ng-click="addGoodsNumber($event, shoppingCardGoodsMsg.shoppingCartGoodsId,  shoppingCardGoodsMsg.shoppingCartNum)"><i class="uk-icon-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="uk-width-1-7 uk-text-center">{{shoppingCardGoodsMsg.goodsSnapshot.onlinePrice * shoppingCardGoodsMsg.shoppingCartNum |currency:''}}元</div>
+                <div class="uk-width-1-7 uk-text-center"><i  ng-click="deleteGoods($event, shoppingCardGoodsMsg.shoppingCartGoodsId)"
+                        class="icon icon-close"></i></div>
+            </dd>
+            <!--显示失效商品-->
+            <dd style="color:#e2e2e2;" ng-if="isInvalidMsg.isInvalid" class="uk-list uk-grid uk-grid-collapse"
+                ng-repeat="isInvalidMsg in goodsList track by $index" >
+                <div class="uk-width-1-7  uk-grid uk-grid-collapse">
+                    <div class="uk-width-3-4 choice-wrap margin-left-32 ">
+                      <span style="color: #b3b3b3;background-color: #e0e0e0;">失效</span>
+                    </div>
+                    <div class=" thumbnail line-height-80">
+                    </div>
+                </div>
+                <div class="uk-width-2-7 uk-clearfix product-info">
+                    <div class="uk-float-left thumbnail uk-margin-right opacity-7">
+                        <img ng-src="{{isInvalidMsg.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}}" alt="">
+                    </div>
+                    <div class="uk-float-left goods-info">
+                        <p style="word-break: break-all">{{isInvalidMsg.goodsSnapshot.nameEn }}</p>
+                        <!--<p style="word-break: break-all">{{shoppingCardGoodsMsg.goodsSnapshot.name |limitTo:-->
+                        <!--12}}</p>-->
+                    </div>
+                </div>
+                <div class="uk-width-1-7 uk-text-center">{{isInvalidMsg.goodsSnapshot.onlinePrice |currency: ''}}元</div>
+                <!--{{goods.productCategoryId}}-->
+                <div class="uk-width-1-7 uk-text-center">
+                    <div style="border:0" class="uk-cloearfix spinner uk-grid uk-grid-collapse uk-container-center">
+                        <button type="button" class="uk-button uk-width-1-3">
+                        </button>
+                        <input style=""type="text" readonly="readonly" class="opacity-7 uk-width-1-3 border-none" ng-model="isInvalidMsg.shoppingCartNum"/>
+                        <button type="button" class="uk-button  uk-width-1-3">
+
+                        </button>
+                    </div>
+                </div>
+                <div class="uk-width-1-7 uk-text-center">{{isInvalidMsg.goodsSnapshot.onlinePrice * isInvalidMsg.shoppingCartNum |currency:''}}元</div>
+                <div class="uk-width-1-7 uk-text-center" ng-click="deleteGoods($event, isInvalidMsg.shoppingCartGoodsId)"><i
+                        class="icon icon-close"></i></div>
+            </dd>
+            <!--END 显示失效商品-->
+
+            <dd ng-if="goodsList.length>0"  class="uk-list uk-grid uk-grid-collapse">
+                <div class="uk-width-1-7  ">
+                    <span class="checkAll  margin-left-32">
+                        <span>
+                   <i ng-if="allChecked" ng-click="checkAll()" class="inputRadio  "  >
+                     <img src="../../static/img/checked.png" alt=""></i>
+
+                   <i ng-if="!allChecked" ng-click="checkAll()" class="  "  >
+                     <img src="../../static/img/check-no.png" alt=""></i>
+                            <!--<input type="checkbox" ng-checked="allChecked" ng-model="all" class="inputRadio "-->
+                            <!--ng-click="checkAll()">-->
+                         <span class="opacity-7 font-check  cursor">全选</span></span>
+                         <span class="delectMore hover-yellow " ng-click="batchDel()"> 批量删除</span>
+                    </span>
+
+                </div>
+                <div class="uk-width-6-7 uk-text-center">
+                    <span class="accounts">
+
+                        <span>已选商品
+                          <b style="color:#FC5C6D;">（<b ng-bind="totalNum"></b>）</b>
+                        </span>
+                        <span>合计(不含运费)：&nbsp; <b>{{totalPrice|currency : ''}}</b>元</span>
+                        <!--<a href="#/pc/shopping_cart"><span>结算 </span></a>-->
+
+                        <a href="#/pc/shopping_cart" ng-if="totalNum>0">
+                    <button type="button" class="uk-button submit-order" ng-click="toShoppingCart()">结算</button>
+                </a>
+                <a href="javascript:" class="no-skip" ng-if="totalNum===0">
+                    <button type="button" onClick="swal('请至少选择一件商品')" class=" uk-button submit-order ">结算</button>
+                </a>
+
+                    </span>
+
+                </div>
+
+            </dd>
+
+        </dl>
+        <!--<div ng-repeat="shoppingCardGoodsMsg2 in data track by $index" >-->
+            <!--{{shoppingCardGoodsMsg2.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}}-->
+        <!--</div>-->
+        <!--结算-->
+    </div>
+</main>

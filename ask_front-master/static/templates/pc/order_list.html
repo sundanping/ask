@@ -1,0 +1,167 @@
+<link rel="stylesheet" href="../../static/css/profile_order.css"/>
+
+<!--begin: main-->
+<main class="main-container uk-width-9-10 uk-container-center" cg-busy="myPromise" ng-init="channel = 'pc'">
+    <div class="wrapper">
+        <ul class="switcher-nav uk-list uk-grid uk-grid-collapse uk-margin-top font-size-14">
+            <li class="uk-width-1-10">
+                <a href="#/pc/user/info">我的资料</a></li>
+            <li class="uk-width-1-10 "><a class="active " href="#/pc/user/order ">我的订单</a></li>
+        </ul>
+
+        <div class="uk-margin-top order-list-wrap padding ">
+            <div class="tools-bar ">
+                <form class="uk-form uk-margin-large-bottom ">
+                    <fieldset class="uk-clearfix ">
+                        <div class="uk-form-icon uk-float-left ">
+                            <i class="icon-search"></i>
+                            <input type="text" placeholder="商品名称/订单号" class="search-order-input" ng-model="content"/>
+
+                            <button type="button " class="uk-button search-order-button" ng-click="searchOrder()">搜索
+                            </button>
+                        </div>
+                        <div class=" uk-float-right ">
+                            <select ng-model="statusCode" ng-change="changeStatusCode()">
+                                <option value="10">全部订单</option>
+                                <option value="1">待支付</option>
+                                <option value="2">待确认</option>
+                                <option value="3">待发货</option>
+                                <option value="4">待收货</option>
+                                <option value="5">待服务</option>
+                                <option value="6">待评价</option>
+                                <option value="7">已评价</option>
+                                <!--<option value="8">已过期</option>-->
+                                <option value="9">已退款</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <table width="100%" class="font-size-16  border-bottom-table">
+                <tr>
+                    <!--<th ></th>-->
+                    <td class="font-weight-bold" width="21%">订单信息</td>
+                    <th width="11%">单价</th>
+                    <th width="11%">商品数量</th>
+                    <!--<th width="10%">总价</th>-->
+                    <th width="11%">运费</th>
+                    <th width="11%">支付小计</th>
+                    <th width="11%">状态</th>
+                    <th width="11%">服务验证码</th>
+                    <th width="11%">操作</th>
+                </tr>
+            </table>
+            <dl class="order-list " ng-repeat="order in data.result ">
+                <div class="orderId">
+                    <a href="#/pc/user/orderInformation/{{order.orderId+'&'+order.createTime}}" name="{{order.orderId}}"
+                       style="color:#353535;" ng-click="showOrderInformation()">订单号 {{order.orderId}} </a>
+                    <span style=";margin-left:20px;opacity: .6;font-weight: 400;font-size: 14px;">{{order.createTime |limitTo:10}}</span>
+                    <!--m加服务店信息  详情  对齐  m站选择服务店时小图标对齐-->
+                    <!--<div style="" class="uk-width-4-10 order-id " ng-if="order.serveType === 'online' ">-->
+                    <!--<a href="#/pc/user/orderInformation/{{order.orderId+'&'+order.createTime}}" name="{{order.orderId}}"-->
+                    <!--style="color:#353535;" ng-click="showOrderInformation()">订单号 {{order.orderId}} </a>-->
+                    <!--&nbsp;&nbsp;-->
+                    <!--<span style="font-size: 14px;font-weight: 400">  {{order.createTime |limitTo:10}}</span>-->
+                    <!--</div>-->
+                    <!--<div style="color: #333;" class="uk-width-4-10 ; " ng-if="order.serveType !== 'online'">-->
+                    <!--<a style="color:#353535;" href="#/pc/user/orderInformation/{{order.orderId+'&'+order.createTime}}">订单号-->
+                    <!--{{order.orderId}}</a>&nbsp;&nbsp;-->
+                    <!--&lt;!&ndash;({{order.orderServe.serviceProviderName}}）&ndash;&gt;-->
+                    <!--<span style="font-size: 14px;font-weight: 400">  {{order.createTime |limitTo:10}}</span>-->
+                    <!--</div>-->
+                </div>
+                <table width="100%" cellspacing="0" cellpadding="0">
+                    <tr ng-repeat="orderGoods in order.orderGoodsList track by $index ">
+                        <td ng-if="$index ==0" class="order-list-info" width="10%" style="opacity: 1" colspan="2">
+                            <div style="width: 100px;height: 100px">
+                                <img style="height: 70px;width: 70px; margin: 15px"
+                                     ng-click="goToURL('/pc/product/intro/' + orderGoods.goodsSnapshot.product.productId)"
+                                     ng-src="{{orderGoods.goodsSnapshot.goodsSnapshotMeta.picUrlList[0]}} " alt="">
+                            </div>
+                        </td>
+                        <td ng-if="$index ==0" class="order-list-info opacity-1 font-weight-bold" width="10%"
+                            style="border-bottom: 1px solid #efefef;">
+                            <span>{{orderGoods.goodsSnapshot.name}}
+                                <span ng-if="order.orderGoodsList.length>1">等</span>
+                            </span>
+                        </td>
+
+                        <th ng-if="$index ==0" class="order-list-info normal-bold-order " width="10%">
+                            {{orderGoods.goodsSnapshot.onlinePrice | currency:''}}
+                        </th>
+                        <th ng-if="$index ==0" class="order-list-info normal-bold-order" width="10%">{{order.number}}
+                        </th>
+                        <!--<th ng-if="$index ==0"  class="order-list-info normal-bold-order" width="10%">{{orderGoods.snapshotPrice |-->
+                        <!--currency:''}}-->
+                        <!--</th>-->
+                        <th ng-if="$index ==0"
+                            class="order-list-info normal-bold-order" width="10%">{{order.deliveryFee | currency:''}}
+                        </th>
+                        <th ng-if="$index ==0"
+                            class="order-list-info opacity-1" width="10%">{{order.payPrice ||0 | currency:''}}
+                        </th>
+                        <!-- rowspan="{{order.orderGoodsList.length}}"-->
+                        <th ng-if="$index ==0" id="{{order.orderId}}" class="order-list-info" width="10%"
+                        >
+                            <!--{{order}}-->
+                            {{showStatus(order.serveType,order.status)}}
+
+                        </th>
+                        <th ng-if="$index ==0" class="order-list-info" width="10%"
+                        >
+                            {{order.orderServe.orderAppointValidate.code}}
+                        </th>
+                        <th ng-if="$index ==0" class="order-list-info" width="10%"
+                        >
+                            <button ng-if="order.status === 'to_pay'"
+                                    ng-click="rePay(order.orderId,order.payPrice)"
+                                    class="operate">重新支付
+                            </button>
+
+                            <button ng-if="order.status === 'confirmed'" ng-click="receiveDelivery(order)"
+                                    class="operate">确认收货
+                            </button>
+
+                            <button ng-if="order.serveType === 'offline' && order.status === 'validated'"
+                                    ng-click="completeOrder(order.orderId)" class="operate">
+                                确认服务
+                            </button>
+
+                            <button ng-if="(order.serveType === 'offline' && order.status === 'complete_s') || (order.serveType === 'online' && order.status === 'received')"
+                                    ng-click="commentOrder(order.orderId)" class="operate">
+                                评价
+                            </button>
+                            <p ng-if="order.status === 'comment'">
+                                <a href="#/pc/comment/order/{{order.orderId}}"
+                                   class="font-color-A5A9AB">查看评价</a>
+                            </p>
+                            <p ng-if="order.status === 'confirmed'">
+                                <a href="#/pc/user/logisticsInformation/{{order.orderDelivery.expressCompany+'-'+order.orderDelivery.deliverySerial}}"
+                                   class="font-color-A5A9AB">查看物流</a>
+                            </p>
+                        </th>
+                    </tr>
+                </table>
+            </dl>
+
+            <ul class="uk-pagination ">
+                <li ng-if="nowIndex=== 0" ng-click="getOrderList(0)"><span class="cye-lm-tag "><i
+                        class="uk-icon-angle-double-left "></i></span></li>
+
+                <li ng-if="nowIndex> 0" ng-click="getOrderList(nowIndex-1)" class="uk-disabled "><span
+                        class="cye-lm-tag "><i class="uk-icon-angle-double-left "></i></span>
+                </li>
+                <li ng-repeat="page in pageNumArr track by $index">
+                    <a href="javascript:;" ng-class="{'active': $index === nowIndex}" ng-click="getOrderList($index)">{{$index+1}}</a>
+                </li>
+                <li ng-if="nowIndex<pageNumArrLen-1" ng-click="getOrderList(nowIndex+1)"><a href="javascript:;"><i
+                        class="uk-icon-angle-double-right "></i></a></li>
+                <!--<li>{{nowIndex}}{{-pageNumArrLen}}</li>-->
+                <li ng-if="nowIndex=== pageNumArrLen-1" ng-click="getOrderList(pageNumArrLen -1)"><span
+                        class="cye-lm-tag "><i class="uk-icon-angle-double-right "></i></span></li>
+
+            </ul>
+        </div>
+    </div>
+</main>
+<!--end: main-->

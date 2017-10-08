@@ -1,0 +1,65 @@
+h4,
+#pc h4 {
+    border-bottom: 1px solid #EEE;
+}
+
+h4 {
+    margin: 15px 0;
+    padding: 5px 0;
+}
+
+h4>.icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: middle;
+    background-size: 65px;
+}
+
+h4>.icon-xfzbz {
+    background-position: 0 -613px;
+}
+
+h4>.icon-zffs {
+    background-position: 0 -631px;
+}
+
+h4>.icon-flsm {
+    background-image: url(../../static/img/icon3.png);
+    background-position: 0 -2243px;
+    height: 17px;
+    width: 16px;
+    background-size: 792px;
+    margin-top: -4px;
+    margin-right: 5px;
+}
+
+#pc h4 {
+    margin-bottom: 30px;
+}
+
+#pc .commercial-activity {
+    position: relative;
+}
+
+#pc .commercial-activity .commercial-activity-bg {}
+
+#pc .commercial-activity .commercial-activity-bg img {
+    width: 100%;
+    opacity: 0.3;
+}
+
+#pc .commercial-activity .commercial-activity-cotent {
+    position: absolute;
+    right: 50px;
+    top: 100px;
+    width: 300px
+}
+.text-indent-12{
+    /*padding-left: 20px;*/
+    text-indent: 12px;
+}
+.padding-left-5{
+    padding-left: 5px;
+    /*padding-left: 20px;*/
+    /*text-indent: 120px;*/
+}

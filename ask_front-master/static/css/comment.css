@@ -1,0 +1,255 @@
+main.user-comment {
+    background: #F8F8F8;
+}
+
+main form>fieldset {
+    background: #FFF;
+}
+
+main .split-line {
+    border-bottom: 1px solid #EEEEEE;
+}
+
+main form textarea {
+    border-radius: 0 !important;
+    border: none !important;
+    height: 100px !important;
+    resize: none;
+}
+
+main form ul.upload-picture-area {}
+
+main form ul.upload-picture-area>li {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+main form ul.upload-picture-area>li.add-picture {
+    background: #DBDADA;
+    position: relative;
+    margin-right: 0;
+}
+
+main form ul.upload-picture-area>li.add-picture>input[type=file] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+main form ul.upload-picture-area>li.add-picture .uk-icon-plus {
+    color: #FFF;
+}
+
+main>.wrapper>footer {
+    height: 65px;
+    line-height: 65px;
+}
+
+main>.wrapper>footer>button.uk-button {
+    background: #FCCF1C;
+    border: none;
+    border-radius: 0;
+    color: #FFF;
+    text-shadow: none;
+    height: 100%;
+}
+
+main .product-info-wrap .product-info {
+    background: #F8F8F8;
+}
+
+main .btn-comment-goods {
+    background: #FCCF1B;
+    color: #363636;
+    border-radius: 0;
+}
+
+#pc form .base-comment fieldset {
+    padding-top: 16px;
+}
+
+#pc main .product-comment .product-info .picture-thumbnail {
+    width: 75px;
+    line-height: 80px;
+}
+
+#pc main .product-comment .product-info .picture-thumbnail img {}
+
+
+#pc main .product-comment .product-info .info {
+    width: 140px;
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
+#pc main .product-comment .satisfaction-wrap {
+    margin-top: 20px;
+}
+
+
+#pc main.user-comment {
+    background: none;
+}
+
+#pc form .extend-comment {
+    border: 1px solid #EEE;
+}
+
+#pc form .extend-comment hr.split-line {
+    border-color: #EEE;
+}
+
+#pc form .btn-submit-comment {
+    background: #FCCF1C;
+    border: none;
+    border-radius: 0;
+    color: #333;
+    text-shadow: none;
+    height: 100%;
+    padding: 10px 12px;
+}
+
+#pc form .title {
+    font-weight: normal;
+    border-bottom: 1px solid #EEE;
+    height: 35px;
+    line-height: 35px;
+}
+
+#pc main .btn-comment-goods {
+    position: relative;
+    top: 20px;
+}
+
+main .icon-star-o {
+    display: block;
+    background-image: url(../img/icon-star-o.png);
+    background-repeat: no-repeat;
+    height: 24px;
+    padding: 0;
+    width: 28px;
+}
+
+main .icon-star {
+    display: block;
+    background-image: url(../img/icon-star.png);
+    background-repeat: no-repeat;
+    height: 24px;
+    width: 28px;
+    padding: 0;
+}
+
+.mechanicerList-wrap {}
+
+.mechanicerList-wrap select {
+    border-radius: 0;
+}
+
+#pc .mechanicerList-wrap {}
+
+#pc .mechanicerList-wrap select {
+    border-radius: 0;
+}
+
+
+.mechanicer-list-wrap .mechanicer-list li {
+    border-bottom: 1px solid #ccc;
+}
+
+.mechanicer-list-wrap .mechanicer-list li:last-child {
+    border-bottom: none;
+}
+
+.mechanicer-list-wrap button {
+    padding: 0;
+    height: 40px;
+    width: 80%;
+    margin-top: 15px;
+    border-radius: 0;
+    background: #fccf1b
+}
+
+#pc main form ul.upload-picture-area>li img {
+    height: 100%;
+}
+
+main>.wrapper>footer>.mobile-btn-comment.uk-button {
+    background: #FCCF1C;
+    border: none;
+    border-radius: 0;
+    color: #FFF;
+    text-shadow: none;
+    height: 65px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+/*#evaluationProduct{*/
+/*font-size: 16px;*/
+/*font-weight: bold;*/
+/*color: #333;*/
+/*padding-bottom: 30px;*/
+/*font-family:Regular;*/
+/*}*/
+.goodsName{
+    border:1px solid #bfbfbf;
+}
+.borderNone{
+    border:none;
+}
+.displayInline{
+    display: inline-block;
+}
+.evaluationProduct{
+    margin-top:-1px;
+    padding: 50px;
+    /*display: inline-block;*/
+    border:1px solid #c9c9c9;
+}
+
+.evaluationProduct:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+.evaluationProduct>div{
+    width: 33.3% ;
+    box-sizing: border-box;
+    float: left;
+    /*background-color:#b6b6b6 ;*/
+}
+.evaluationProduct>div>img{
+    width: 120px;
+    height: 120px;
+}
+.commentImg{
+    position: relative;
+}
+.commentImg >li >p{
+    position: absolute;
+    top:-12px;
+    width: 60px;
+    height: 56px;
+    background-color: #000000;
+    opacity: .5;
+}
+.commentImg >li >p>img{
+    width: 10px;
+    height:10px!important;
+    cursor: pointer;
+    margin-top: -46px;
+    margin-right: -40px;
+}
+.a{
+    display: none;
+}
+

@@ -1,0 +1,66 @@
+<div class="uk-margin-top order-list-wrap padding" ng-controller="OrderListController">
+    <div class="tools-bar">
+        <form class="uk-form uk-margin-large-bottom">
+            <fieldset class="uk-clearfix">
+                <div class="uk-form-icon uk-float-left">
+                    <i class="uk-icon-search"></i>
+                    <input type="text">
+
+                    <button type="button" class="uk-button">搜索</button>
+                </div>
+                <div class=" uk-float-right">
+                    <select>
+                      <option value="">全部订单</option> 
+                   </select>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <dl class="padding-bottom" ng-repeat="order in orderList">
+        <dt class="uk-grid uk-grid-collapse">
+            <div class="uk-width-2-10">订单号 {{order.orderNo}} {{order.store}}</div> 
+            <div class="uk-width-1-10">单价</div> 
+            <div class="uk-width-1-10">数量</div> 
+            <div class="uk-width-1-10">总价</div> 
+            <div class="uk-width-1-10">运费</div> 
+            <div class="uk-width-1-10">小计</div> 
+            <div class="uk-width-1-10">状态</div> 
+            <div class="uk-width-1-10">提货验证码</div> 
+            <div class="uk-width-1-10">操作</div> 
+        </dt>
+        <dd class="uk-margin-top">
+            <li class="uk-grid uk-grid-collapse">
+                <div class="uk-width-2-10">
+                    <div class="uk-clearfix goods-info-wrapper">
+                        <div class="uk-float-left thumbnail "><img ng-src="{{order.goodsPicture}} " alt=" " /></div>
+                        <div class="uk-float-left uk-margin-small-left product-info">
+                            <p>{{order.goodsName}}</p>
+                            <p>{{order.detailName}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-10">{{order.price}}</div>
+                <div class="uk-width-1-10">{{order.goodsNumber}}</div>
+                <div class="uk-width-1-10">{{order.totalPrice}}</div>
+                <div class="uk-width-1-10">{{order.freight}}</div>
+                <div class="uk-width-1-10">{{order.actualPrice}}</div>
+                <div class="uk-width-1-10">{{order.statusName}}</div>
+                <div class="uk-width-1-10">{{order.pickGoodsCode}}</div>
+                <div class="uk-width-1-10">
+                    <button type="button" class="uk-button btn-confirm-receipt">确认收货</button>
+                </div>
+            </li>
+        </dd>
+    </dl>
+
+    <ul class="uk-pagination">
+        <li class="uk-disabled"><span class="cye-lm-tag"><i class="uk-icon-angle-double-left"></i></span></li>
+        <li class="uk-active"><span class="cye-lm-tag">1</span></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><span class="cye-lm-tag">...</span></li>
+        <li><a href="#">20</a></li>
+        <li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>
+    </ul>
+</div>

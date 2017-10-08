@@ -1,0 +1,49 @@
+.slideunlock-wrapper {
+    position: relative;
+    background: #ECF0F1;
+    margin: 0 auto;
+}
+.font-size-18{
+    font-size: 18px;
+}
+.slideunlock-slider {
+    padding: 8px;
+    position: relative;
+    border-radius: 2px;
+    background-color: #EDEDED;
+    color: #9A9A9A;
+    overflow: hidden;
+    text-align: center;
+}
+
+.slideunlock-slider.success {
+    background-color: #EDEDED;
+}
+
+.slideunlock-label {
+    width: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: calc(100% - 2px);
+    background: #E67E22;
+    z-index: 999;
+    border-radius: 2px;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #ccc;
+    line-height: 35px;
+}
+
+.slideunlock-label-tip {
+    z-index: 9;
+}
+
+#reset-btn {
+    margin: 20px 0 10px 0;
+}
+
+p {
+    padding: 0 10px;
+    word-wrap: break-word;
+}

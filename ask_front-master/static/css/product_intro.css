@@ -1,0 +1,81 @@
+#pc .product-intro-switcher-title {
+    width: 408px;
+}
+
+#pc .product-intro-switcher-title li {
+    border-right: 2px solid #EEE;
+    padding: 0 30px;
+}
+
+#pc .product-intro-switcher-title li:last-child {
+    border-right: none;
+}
+
+#pc .product-intro-switcher-title .uk-active>* {
+    background: none !important;
+    color: #333 !important;
+    border: none;
+    box-shadow: none;
+    font-weight: bold;
+}
+
+#pc .product-intro-switcher-title-wrap .btn-buy {
+    border: none;
+    border-radius: 0;
+    margin-top: -2px;
+    background: #FCCF1B;
+}
+
+#pc .uk-switcher img {
+    /*width: 100%;*/
+}
+
+#pc .empty-tip {
+    padding-top: 50px;
+    margin-bottom: 350px;
+}
+
+#pc .comment-list {
+    margin-bottom: 20px;
+}
+
+#pc .comment-list li {
+    border-bottom: 1px solid #efeeef;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+#pc .comment-list li:last-child {
+    border-bottom: none;
+}
+
+#pc .comment-list .usr-avatar {
+    background-image: url(../../static/img/icon.png);
+    background-color: #ccc;
+    width: 50px;
+    height: 50px;
+    background-position: 0px -38px;
+    margin-top: 12px;
+}
+
+#pc .comment-list .content {
+    padding-top: 10px;
+    word-break: break-all;
+}
+
+#pc .product-intro-switcher-title-wrap {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    padding-top: 15px;
+    background: #fff;
+    padding-right: 60px;
+}
+
+#pc .product-intro-wrap {
+    padding-top: 50px !important;
+}
+
+#pc main {
+    padding-top: 0;
+}

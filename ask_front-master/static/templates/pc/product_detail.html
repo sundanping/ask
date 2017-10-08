@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="../../static/css/index.css" />
+<link rel="stylesheet" href="../../static/css/product_detail.css" />
+
+<main class="main-container product-detail" cg-busy="myPromise">
+    <!--begin: product-->
+    <article class="uk-margin-large-top padding-large-bottom product-info" ng-init="channel = 'pc'">
+        <div class="uk-width-8-10 uk-container-center uk-grid product-info-wrap">
+            <div class="uk-width-1-2 pictures uk-cloearfix">
+                <div class="uk-float-left uk-text-center thumbnail-list">
+                    <a href="" ng-click="onScroll('top')" class="font-color-FCD127"><i class="uk-icon-caret-up"></i></a>
+                    <div class="thumbnails">
+                        <ul class="uk-list">
+                            <li ng-repeat="picUrl in data.pcBuyUrlList track by $index">
+                                <a href="" ng-click="onChangeProductPicURL(picUrl)"><img ng-src="{{picUrl}}" alt="" /></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="" ng-click="onScroll('bottom')" class="font-color-FCD127"><i class="uk-icon-caret-down"></i></a>
+                </div>
+                <div class="uk-float-left big-picture">
+                    <img ng-src="{{productPicURL}}" alt="" />
+                    <!--<img src="../../static/img/product_test_img.png" alt="" />-->
+                </div>
+            </div>
+
+            <div class="uk-width-1-2 product-info">
+                <h4 style="padding-left: 0" class="font-size-50 font-weight-bold margin-bottom-30 uk-h2 background-color-FFF">{{data.productCategoryName}}&nbsp;{{data.productNameEn}}</h4>
+
+                <!--begin: 购物操作区-->
+                <div class="product-operation-wrapper">
+                    <form class="uk-form">
+                        <fieldset ng-repeat="(metaLabelKey ,metaLabelsMap) in extendMetaMap">
+                            <label class="uk-margin-right">{{metaLabelKey}}</label>
+                            <ul class="uk-list button-group goods-labels labels" data-labels-key="{{metaLabelKey}}">
+                                <li ng-repeat="(label, statusMap) in metaLabelsMap">
+                                    {{labelMap}}
+                                    <button  class="uk-button goods-label label " ng-disabled="statusMap.disabled" ng-class="{'chose': statusMap.selected}"
+                                             ng-click="choiceLabel(metaLabelsMap, statusMap)">{{label}}
+                                    </button>
+                                </li>
+                            </ul>
+                        </fieldset>
+                        <fieldset style="margin-bottom: -26px;" >
+                            <label class="uk-margin-right">产品数量</label>
+                            <div class="uk-cloearfix spinner uk-grid uk-grid-collapse">
+                                <div class="uk-width-2-3 goods-num" >{{goods.number}}</div>
+                                <!--<input type="text" style=" border-radius: 0; text-align: center; z-index: 1  ; padding-top:19px;padding-bottom:19px; color: #000;" readonly="readonly"  class="uk-width-2-3 border-ie" ng-model="goods.number" />-->
+                                <div class="uk-width-1-3 spinner-button-wrap">
+                                    <a href="javascript:;" class="spinner-button" ng-click="addGoodsNumber(event)">+</a>
+                                    <a href="javascript:;" class="spinner-button" ng-click="reduceGoodsNumber(event)" ng-disabled="goods.number===1">-</a>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="uk-margin-large-top ">
+                            <div ng-if="goods.onLinePrice !== 0">
+                                <label class="uk-margin-right">产品单价</label>
+                                <span class="font-weight-bold font-size-24 margin-left-12">¥  {{goods.onLinePrice}}</span>
+                            </div>
+                            <br>
+                            <div>
+                                <span style="color: #fec42f; padding-top: 20px ; ">  全场商品满{{noFreeAreas.freeAmount}}免邮,{{noFreeAreas.province}}除外</span>
+
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="padding-top button-group buy-button-group">
+                                <button type="button" class="uk-button uk-margin-right" data-shopping-cart-url="pc/shopping_settlement"
+                                        ng-click="onShoppingCart($event, true)">立即购买
+                                </button>
+                                <button type="button" class="uk-button" data-shopping-cart-url="pc/shopping_cart"
+                                        ng-click="onShoppingCart($event)"><i class="icon icon-shopping-cart"></i>加入购物车
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <!--end: 购物操作区-->
+            </div>
+        </div>
+    </article>
+    <!--end: product-->
+    <!-- begin: 推荐产品 -->
+    <article class="product-display">
+        <section class="product-classification">
+            <h4><i class="icon icon-title-decorate"></i>推荐产品</h4>
+            <div class="product-list">
+                <ul class="uk-list uk-grid uk-grid-collapse">
+                    <li class="uk-width-1-3" data-product-detail-url="pc/product/intro/{{product.productId}}" ng-repeat="product in data.recommendProductList" ng-click="onProductIntro($event)">
+                        <div class="uk-margin-top uk-margin-bottom product-picture"><img class="scale-img" ng-src="{{product.logoUrl}}" /></div>
+                        <div class="uk-container-center product-info">
+                            <dl class="">
+                                <dt>{{product.nameEn}}</dt>
+                                <dd class="margin-top-7 font-color-333">{{product.description}}</dd>
+                                <dd  style="font-weight: 800"  class="margin-top-7 font-color-333">¥  {{product.priceStr}}</dd>
+                                <dd class="margin-top-20"><a ng-href="" data-product-detail-url="pc/product/detail/{{product.productId}}" ng-click="onProductDetail($event)" class="btn-buy">立即购买</a></dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!--end: 推荐产品 -->
+    </article>
+</main>
+
+<script type="text/javascript" src="../../static/lib/flexslider/jquery.flexslider-min.js"></script>

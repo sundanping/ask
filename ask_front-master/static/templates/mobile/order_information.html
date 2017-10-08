@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="../../static/css/order-information.css" />
+
+<!--begin: main-->
+<main class="main-container" id="mobile" ng-init="channels='m'">
+    <article class="wrapper" ng-controller="orderInformation">
+        <!--<div  class="order-top-m">-->
+            <!--<span class="font-size-16 font-weight-bold">订单信息</span>-->
+            <!--&lt;!&ndash;<span>订单号：{{id}}  </span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>&nbsp;&nbsp;时间 {{time |limitTo:10}}</span>&ndash;&gt;-->
+        <!--</div>-->
+        <div class="order-top-m  ">
+           <span class="font-size-15 font-weight-bold">订单信息</span>
+            <div style="margin-top: 5px;">
+                <span>订单号：{{id}}  </span>
+                <span style="float: right;padding-right: 13px;">{{time |limitTo:10}}</span>
+            </div>
+        </div>
+        <div>
+
+        </div>
+        <!--<div>-->
+        <!--</div>-->
+        <!--服务验证码-->
+        <div style="text-indent:-3px" class="serverNum-order-info">
+            <span  class="color-yellow-m-orderInfo">*</span>服务验证码:{{orderInformation.code}}
+        </div>
+        <!--goods messsage-->
+
+        <div style="text-indent:-3px" class="serverNum-order-info"><span  class="color-yellow-m-orderInfo">*</span>商品信息</div>
+        <div class="row background-color-order-img" ng-repeat="message in orderInformation.containerList">
+            <div class="col-3 order-img">
+                <img src="{{message.logoUrl}}" alt="" ng-click="goToURL('/m/product/detail/' + message.productId)"/>
+            </div>
+            <div   class="col-6 over-hidden  font-size-14   font-weight-bold-orderInfo">
+                <div style="height: 60px">{{message.goodsName}}</div>
+                <div >X {{message.num}}</div>
+            </div>
+            <div style="margin-top: 60px;text-align: right;" class="col-3 font-weight-bold-orderInfo ">
+                <!--<p>&nbsp;</p>-->
+                {{message.goodsPrice*message.num*1 |currency:''}} 元
+            </div>
+        </div>
+        <div class="font-size-14 bottom-10 margin-top-10">
+            <div class="opacity-7 ">快递费：
+                <span class="float-right ">+{{orderInformation.deliveryFee*1 ||0 |currency:''}} 元</span>
+            </div>
+            <div class="opacity-7  ">累计工时费：
+                <span class="float-right ">+{{orderInformation.serviceFee*1  |currency:''}} 元</span>
+            </div>
+            <div class="opacity-7 ">兑换卡优惠：
+                <span class="float-right ">-{{orderInformation.discountPrice |currency:''}} 元</span>
+            </div>
+            <!--margin-top-20 margin-bottom-20-->
+            <div style="margin-bottom: 10px" class=" font-size-15 font-weight-bold ">订单总额：
+                <span class="float-right ">
+                    {{totalgoodsPrice -orderInformation.discountPrice*1+orderInformation.deliveryFee*1+orderInformation.serviceFee*1|currency:''}} 元</span>
+            </div>
+        </div>
+        <div class="exchange-card bottom-10">
+            <p style="padding-left:0;" class="font-size-16"> <span  class="color-yellow-m-orderInfo">*</span>本订单使用卡片编码</p>
+
+            <p style="padding-left:0;" class="border-top-line padding-top-10 font-size-14"  >
+               兑换码：{{orderInformation.cardMap.card_id}}  </p>
+
+        </div>
+        <!--收货信息-->
+
+        <div style="padding: 0;" class="bottom-10">
+            <div class="receiving-information font-size-16 margin-bottom-10"> <span  class="color-yellow-m-orderInfo">*</span>收货信息</div>
+            <div class="font-size-14">收货人：{{orderInformation.orderDelivery.receiverName}}</div>
+            <div class="font-size-14">收货人手机号码：{{orderInformation.orderDelivery.receiverPhone}}</div>
+            <div style="margin-bottom: 10px;" class="font-size-14">收货人地址：
+              {{orderInformation.orderDelivery.province}}{{orderInformation.orderDelivery.city}}{{orderInformation.orderDelivery.region}}{{orderInformation.orderDelivery.street}}
+                {{orderInformation.orderDelivery.detailAddress}}
+            </div>
+        </div>
+        <div class="font-size-16 padding-top-10  border-bottom-1" > <span  class=" color-yellow-m-orderInfo">*</span>服务店</div>
+
+        <div style="padding: 10px 10px 10px 2px;;font-size: 16px" class="font-size-14 bottom-10">
+           <div> 服务店名称：{{orderInformation.serviceProviderName}}
+              </div>
+            服务店地址：
+            <span>{{orderInformation.serviceAddress.province ||"无"}}{{orderInformation.serviceAddress.city}}{{orderInformation.serviceAddress.region}}{{orderInformation.serviceAddress.street}}{{orderInformation.serviceAddress.detail}}</span>
+            <div>
+                <span>联系电话：</span>
+                <span>{{orderInformation.serviceProviderPhone ||"无"}}</span>
+            </div>
+            <div>
+                <span>营业时间：</span>
+                <span>{{orderInformation.serviceWorkingHours ||"无"}}</span>
+            </div>
+        </div>
+        <!--<div class="bottom-10"  ng-if="orderInformation.serviceProviderName.length===0">-->
+            <!--<p class="padding-top-10 font-size-18 border-bottom-1">服务店信息</p>-->
+            <!--<p class="">服务店名称 : {{orderInformation.serviceProviderName||'暂无信息'}}</p>-->
+            <!--<p class="">服务店地址: {{orderInformation.serviceAddress}}</p>-->
+            <!--<p  class="">联系电话: {{orderInformation.serviceProviderPhone}} </p>-->
+            <!--<p class="">营业时间: {{orderInformation.serviceWorkingHours}}</p>-->
+        <!--</div>-->
+        <div class="padding-top-10">
+           <p  style="padding-left:0;" class="font-size-16 border-bottom-1"> <i class="color-yellow-m-orderInfo ">*</i>发票信息</p>
+            <p  style="padding-left:0;" class="font-size-14">发票信息：{{orderInformation.header}}</p>
+        </div>
+    </article>
+</main>
+<!--end: main-->

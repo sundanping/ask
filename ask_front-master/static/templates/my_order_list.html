@@ -1,0 +1,51 @@
+<form class="uk-form order-form">
+    <select class="uk-margin-top uk-margin-left select-order-list-filter">
+        <option>全部订单</option>
+    </select>
+
+    <!-- begin: order list -->
+    <ul class="uk-list order-list" ng-controller="OrderListController">
+        <!-- begin: order info
+            XXX: 如有更好class name，请修改
+        -->
+        <li ng-repeat="order in orderList">
+            <div class="order-info uk-clearfix">{{order.orderNo}}({{order.store}})
+                <a href="javascript:;" class="uk-float-right"><i class=" uk-icon-trash-o "></i></a>
+            </div>
+
+            <div class="goods-wrapper ">
+                <div class="uk-grid uk-grid-collapse goods-info-wrapper ">
+                    <div class="uk-width-2-3 uk-clearfix product-intro ">
+                        <div class="uk-float-left thumbnail "><img ng-src="{{order.goodsPicture}} " alt=" " /></div>
+                        <div class="uk-float-left uk-margin-small-left product-info ">
+                            <dl>
+                                <dt>{{order.goodsName}}</dt>
+                                <dd>{{order.detailName}}</dd>
+                                <dd class="font-color-A5A9AB goods-number ">X{{order.goodsNumber}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="uk-width-1-3 uk-text-right goods-info ">
+                        <div class="font-color-A5A9AB order-status ">{{order.statusName}}</div>
+                        <div class="order-total-price ">{{order.totalPrice}}元</div>
+                    </div>
+                </div>
+
+                <div class="order-price-info ">
+                    共{{order.goodsNumber}}件商品 实付款{{order.actualPrice}}元 (运费{{order.freight}}元)
+                </div>
+            </div>
+
+            <div class="uk-clearfix operate ">
+                <span>提货码 {{order.pickGoodsCode}}</span>
+                <fieldset class="uk-float-right ">
+                    <button type="button " class="uk-button btn-check-logistics ">确认收货</button>
+                    <button type="button " class="uk-button btn-confirm-receipt ">确认收货</button>
+                </fieldset>
+            </div>
+        </li>
+        <!-- end: order info-->
+    </ul>
+    <!-- end: order list -->
+</form>

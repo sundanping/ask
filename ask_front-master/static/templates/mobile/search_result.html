@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../../static/css/search_result.css" />
+
+<main class="search-result-wrap" ng-controller="SearchRusltController" ng-init="channel = 'm'">
+    <div style="display: none" ng-init="getRusltList()"></div>
+    <ul class="uk-list uk-margin-left search-result-list" ng-if="resultList.length > 0">
+        <li class="uk-clearfix font-color-9f9f9f" ng-repeat="result in resultList" ng-click="goToURL('m/product/detail/' + result.productId)">
+            <div class="uk-float-left uk-grid uk-grid-collapse product-info-wrap">
+                <div class="uk-width-1 padding-left product-info">{{result.name}}</div>
+            </div>
+            <div class="uk-float-right">
+                <i class="uk-icon-chevron-right"></i>
+            </div>
+        </li>
+    </ul>
+    <div ng-if="resultList.length ===0" class="padding-left uk-margin-large-top">
+        无搜索结果
+    </div>
+</main>

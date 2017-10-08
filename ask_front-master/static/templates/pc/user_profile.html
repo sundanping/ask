@@ -1,0 +1,271 @@
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/datepicker.min.css"/>
+<link rel="stylesheet" href="../../static/css/profile_order.css"/>
+
+<!--begin: main-->
+<main class="main-container uk-width-9-10 uk-container-center" cg-busy="myPromise">
+    <div class="wrapper">
+        <ul class="switcher-nav uk-list uk-grid uk-grid-collapse uk-margin-top font-size-14">
+            <li class="uk-width-1-10"><a class="active" href="#/pc/user/info">我的资料</a></li>
+            <li class="uk-width-1-10"><a href="#/pc/user/order">我的订单</a></li>
+        </ul>
+
+        <div>
+            <form class="uk-form background-color-EFEEEF profile">
+                <fieldset class="background-color-FFF padding-left padding-bottom uk-clearfix">
+                    <h4 class="padding-top">基本资料</h4>
+                    <div class="uk-form-row uk-grid uk-grid-medium">
+                        <div class="uk-width-1-4 padding-remove-left">
+                            <input type="text" placeholder="手机号码" class="uk-width-1"
+                                   ng-model="data.phone"/>
+                        </div>
+                        <div class="uk-width-1-4">
+                            <input type="text" class="uk-width-1" placeholder="请设置昵称"
+                                   ng-model="data.nickname"/>
+                        </div>
+                        <div class="uk-width-1-4">
+                            <div class="virtual-select-wrap">
+                                <div class="virtual-select">
+                                    <span class="font-color-9f9f9f" ng-if="data.gender === null">性别</span>
+                                    <span ng-if="data.gender !== null">{{data.gender}}</span>
+                                    <i class="icon icon-drop"></i>
+                                </div>
+                                <select class="uk-width-1" ng-model="data.gender">
+                                    <option value="男">男</option>
+                                    <option value="女">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="uk-width-1-4">
+                            <input type="text" class="uk-width-1"
+                                   placeholder="出生日期（1999/09/09）" data-uk-datepicker="{format:'YYYY-MM-DD'}"
+                                   ng-model="data.birthday"/>
+                        </div>
+                    </div>
+
+                    <button type="button" class="uk-button uk-float-right btn-confirm"
+                            ng-click="onMofidyUserInfo($event)">保存资料
+                    </button>
+                    <!--<button type="button" class="uk-button uk-float-right btn-confirm" ng-if="!isUserInfoEditMode"-->
+                            <!--ng-click="onMofidyUserInfo($event)">编辑资料-->
+                    <!--</button>-->
+                </fieldset>
+
+                <div ng-controller="UserPasswordController">
+                    <fieldset class="background-color-FFF padding-left padding-bottom uk-clearfix"
+                              ng-init="channel='pc'">
+                        <div>
+                            <h4 class="padding-top">修改密码</h4>
+                            <div class="uk-form-row uk-grid uk-grid-medium">
+                                <div class="uk-width-1-4 padding-remove-left">
+                                    <input type="password" class="uk-width-1" placeholder="请输入新密码" ng-model="password"/>
+                                </div>
+                                <div class="uk-width-1-4">
+                                    <input type="password" class="uk-width-1" placeholder="请确认新密码"
+                                           ng-model="confirmPassword"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="uk-button uk-float-right btn-confirm"
+                                ng-click="modifyPassword(password, confirmPassword)">保存密码
+                        </button>
+                    </fieldset>
+                </div>
+
+                <div ng-controller="UserCarController" ng-init="channel='pc'">
+                    <fieldset class="background-color-FFF padding-left padding-bottom uk-clearfix"
+                              ng-init="getCarList()">
+                        <div>
+                            <h4 class="padding-top">车型资料</h4>
+                            <div class="uk-form-row uk-grid uk-grid-medium">
+                                <div class="uk-width-1-4 padding-remove-left">
+                                    <div class="virtual-select-wrap">
+                                        <div class="virtual-select">
+                                            <span class="font-color-9f9f9f"
+                                                  ng-if="car.brand.name === undefined">品牌</span>
+                                            <span ng-if="!car.brand.name !== undefined">{{car.brand.name}}</span>
+                                            <i class="icon icon-drop"></i>
+                                        </div>
+                                        <select class="uk-width-1" ng-model="car.brand"
+                                                ng-options="brand.name for brand in brands"
+                                                ng-change="onGetModel($event)"></select>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-4">
+                                    <div class="virtual-select-wrap">
+                                        <div class="virtual-select">
+                                            <span class="font-color-9f9f9f"
+                                                  ng-if="car.model.name === undefined">请选择车型</span>
+                                            <span ng-if="!car.model.name !== undefined">{{car.model.name}}</span>
+                                            <i class="icon icon-drop"></i>
+                                        </div>
+                                        <select ng-model="car.model" ng-options="model.name for model in models"
+                                                ng-change="getCarYears(car.model)"></select>
+                                        <select class="uk-width-1" ng-if="!models">
+                                            <option disabled="disabled">请选择车型</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-4">
+                                    <div class="virtual-select-wrap">
+                                        <div class="virtual-select">
+                                            <span class="font-color-9f9f9f" ng-if="car.year === ''">请选择年款</span>
+                                            <span ng-if="!car.year !== ''">{{car.year}}</span>
+                                            <i class="icon icon-drop"></i>
+                                        </div>
+                                        <select ng-model="car.year" ng-if="years"
+                                                ng-change="getDetailModels(car.model, car.year)">
+                                            <option value="{{year}}" ng-repeat="year in years">{{year}}</option>
+                                        </select>
+                                        <select class="uk-width-1" ng-if="!years">
+                                            <option disabled="disabled">请选择年款</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-4">
+                                    <div class="virtual-select-wrap">
+                                        <div class="virtual-select">
+                                            <span class="font-color-9f9f9f"
+                                                  ng-if="car.detailModel === ''">请选择具体款型</span>
+                                            <span ng-if="!car.detailModel !== ''">{{car.detailModel}}</span>
+                                            <i class="icon icon-drop"></i>
+                                        </div>
+                                        <select class="uk-width-1" ng-if="detailModels" ng-model="car.detailModel">
+                                            <option value="{{detailModel}}" ng-repeat="detailModel in detailModels">
+                                                {{detailModel}}
+                                            </option>
+                                        </select>
+                                        <select class="uk-width-1" ng-if="!detailModels">
+                                            <option disabled="disabled">请选择具体款型</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="uk-button uk-float-right btn-confirm" ng-click="addCarModel(car)">
+                            保存车型
+                        </button>
+                    </fieldset>
+
+                    <fieldset class="background-color-FFF padding-left padding-bottom uk-clearfix"
+                              ng-if="carList.length > 0">
+                        <div>
+                            <h4>已有车型</h4>
+                            <ul class="uk-list existing-info-list ">
+                                <li class="uk-clearfix" ng-repeat="car in carList track by $index">
+                                    <div class="uk-width-1-2 background-color-FAFAFA padding">
+                                        <span class="background-color-FAFAFA  info">{{car.model}}{{car.detail}}</span>
+                                        <i class="uk-float-right icon icon-close" style="margin-right: 38px; " ng-click="deleteCarModel($index)"></i>
+                                    </div>
+                                    <div class="uk-width-1-2">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div ng-controller="UserAddressController" ng-init="channel = 'pc'">
+                    <fieldset class="background-color-FFF padding-left padding-bottom uk-clearfix"
+                              ng-init="getAddressList()">
+                        <h4 class="padding-top">收货地址</h4>
+
+                        <div class="uk-form-row uk-grid uk-grid-medium">
+                            <div class="uk-width-1-4 padding-remove-left">
+                                <input type="text" placeholder="收货人" class="uk-width-1" ng-model="address.name" />
+                            </div>
+
+                            <div class="uk-width-1-4">
+                                <input type="text" placeholder="收货人手机号码" class="uk-width-1" ng-model="address.phone" />
+                            </div>
+
+                            <div class="uk-width-1-4">
+                                <div class="virtual-select-wrap">
+                                    <div class="virtual-select">
+                                        <span class="font-color-9f9f9f"
+                                              ng-if="address.province.name === undefined">省</span>
+                                        <span ng-if="address.province.name !== undefined">{{address.province.name}}</span>
+                                        <i class="icon icon-drop"></i>
+                                    </div>
+
+                                    <select ng-model="address.province"
+                                            ng-options="province.name for province in provinces"
+                                            ng-change="getCites(address.province)">
+                                        <option value="" disabled="disabled">请选择省份</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-4">
+                                <div class="virtual-select-wrap">
+                                    <div class="virtual-select">
+                                        <span class="font-color-9f9f9f" ng-if="address.city.name === undefined">市</span>
+                                        <span ng-if="address.city.name !== undefined">{{address.city.name}}</span>
+                                        <i class="icon icon-drop"></i>
+                                    </div>
+                                    <select ng-model="address.city" ng-options="city.name for city in cities"
+                                            ng-change="getRegionList(address.city)">
+                                        <option value="" disabled="disabled">请选择市</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-4 padding-remove-left uk-margin-top">
+                                <div class="virtual-select-wrap">
+                                    <div class="virtual-select">
+                                        <span class="font-color-9f9f9f"
+                                              ng-if="address.region.name === undefined">区</span>
+                                        <span ng-if="address.region.name !== undefined">{{address.region.name}}</span>
+                                        <i class="icon icon-drop"></i>
+                                    </div>
+                                    <select ng-model="address.region" ng-options="region.name for region in regions"
+                                            ng-change="getStreetList(address.region)">
+                                        <option value="" disabled="disabled">请选择区</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-4 uk-margin-top">
+                                <div class="virtual-select-wrap">
+                                    <div class="virtual-select">
+                                        <span class="font-color-9f9f9f" ng-if="address.street === undefined">街道</span>
+                                        <span ng-if="address.street.name !== undefined">{{address.street.name}}</span>
+                                        <i class="icon icon-drop"></i>
+                                    </div>
+                                    <select ng-model="address.street" ng-options="street.name for street in streets">
+                                        <option value="" disabled="disabled">请选择街道</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-4 uk-margin-top">
+                                <input type="text" ng-model="address.detail" placeholder="请输入具体地址" class="uk-width-1"/>
+                            </div>
+                        </div>
+
+                        <button type="button" class="uk-button uk-margin-large-top uk-float-right btn-confirm"
+                                ng-click="addAddress(address)">保存地址
+                        </button>
+
+                    </fieldset>
+
+                    <fieldset class="background-color-FFF padding-left padding-bottom uk-clearfix"
+                              ng-if="addressList.length > 0">
+                        <h4>已有收货地址</h4>
+                        <ul class="uk-list existing-info-list">
+                            <li  class="uk-width-1-2 uk-clearfix" ng-repeat="address in addressList track by $index">
+                                <!--<div style="word-break: break-all"  class="background-color-FAFAFA padding info">-->
+                                    <!--<span class="uk-margin-right">{{address.name}}</span>-->
+                                    <!--<span class="uk-margin-right">{{address.phone}}</span>-->
+                                    <!--<span >{{address.province}}{{address.city}}{{address.region}}{{address.street}}{{address.detail}}</span>-->
+                                <!--</div>-->
+                                <div  class="background-color-FAFAFA padding info">
+                                  <span style="display: inline-block;width: 70px;">  {{address.name}} </span>
+                                    <span style="display: inline-block;width: 100px;"> {{address.phone}} </span>
+                                    <span >{{address.province}}{{address.city}}{{address.region}}{{address.street}}{{address.detail}}</span></div>
+                                <i class="uk-float-right icon icon-close" style="margin-top: -39px;margin-right: 50px;" ng-click="delectAddress($index)"></i>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<!--end: main-->

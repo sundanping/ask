@@ -1,0 +1,55 @@
+<header ng-controller="HeaderController">
+    <nav class="uk-navbar  uk-navbar-attached">
+        <ul class="uk-navbar-nav uk-grid uk-grid-collapse">
+            <li class="logo uk-width-1-10">
+                <a href="pc/index"><img src="../../static/img/logo.png" alt="logo" /></a>
+            </li>
+            <li class="uk-width-1-10 nav-search" ng-controller="SearchComponent">
+                <a href="" ng-click="visibility = !visibility"><i class="icon search"></i></a>
+                <div class="search-box" ng-show="visibility">
+                    <form class="form-search-box uk-form uk-grid uk-collapse">
+                        <input type="text" class="uk-width-2-3 input-search" name=" " value=" " placeholder="搜索产品 ">
+                        <button type="submit" class="uk-width-1-3" ng-click="visibility = !visibility">搜索</button>
+                    </form>
+                </div>
+            </li>
+            <li class="uk-width-1-10 uk-parent" data-uk-dropdown ng-repeat="itemList in navProductList">
+                <a hre="">{{itemList.itemName}}</a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-cleafix uk-nav uk-nav-navbar">
+                        <li class="uk-float-left uk-text-center" ng-repeat="product in itemList.list">
+                            <a href="#pc/product/intro/{{product.id}}/">
+                                <img ng-src="{{product.picture}}" alt="" />
+                                <span class="uk-margin-top font-weight-bold display-block product-name">{{product.productName}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="uk-width-1-10"><a hre="javascript:;">了解AutoAsk</a></li>
+            <li class="uk-width-1-10">
+                <a href="#user-login-modal" data-uk-modal>
+                    <i class="icon user"></i>
+                    <div class="subtitle">注册/登陆</div>
+                </a>
+            </li>
+            <li class="uk-width-1-10" >
+                <a href="#pc/shopping_settlement">
+                    <div class="shopping-cart-wrap">
+                        <div class="uk-clearfix shopping-car-main-title">
+                            <i class="uk-float-left icon shopping-cart"></i>
+                            <span class="uk-float-left shopping-car-tip" >（{{totalNums}}）</span>
+                        </div>
+                        <div class="subtitle">购物车</div>
+                    </div>
+                </a>
+            </li>
+            <li class="uk-width-1-10 fwts">
+                <div><a href="">服务</a></div>
+                <!--<div><a href="">探索</a></div>-->
+            </li>
+        </ul>
+    </nav>
+
+    <pc-user-login-modal></pc-user-login-modal>
+</header>

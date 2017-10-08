@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/datepicker.min.css" />
+<link rel="stylesheet" href="../../static/lib/bower_components/uikit/css/components/form-select.min.css" />
+
+<link rel="stylesheet" href="../../static/css/profile_order.css" />
+
+<!--begin: main-->
+<main class="main-container" cg-busy="myPromise">
+    <div class="wrapper uk-margin-top">
+        <form class="uk-form background-color-EFEEEF profile">
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix" ng-click="goToPage('m/user/base_info/edit')">
+                    <label class="uk-form-label">修改用戶信息</label>
+                    <i class="uk-icon-chevron-right uk-float-right uk-margin-right"></i>
+                </div>
+            </fieldset>
+
+            <fieldset class="background-color-FFF padding-left padding-bottom">
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">头像</label>
+                    <div class="uk-float-right uk-margin-right default_avatar">
+                        <img ng-src="../../static/img/default_avatar.jpg" alt="" ng-if="!data.avatar"/>
+                        <img ng-src="{{data.avatar}}" alt="" ng-if="data.avatar"/>
+                    </div>
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">手机号码</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" readonly ng-model="data.phone" />
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">昵称</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" placeholder="请设置昵称" readonly ng-model="data.nickname" />
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">性别</label>
+                    <div class="uk-form-select uk-float-right uk-margin-right" data-uk-form-select>
+                        <span ng-if="data.gender">{{data.gender}}</span>
+                        <span ng-if="!data.gender">选择性别</span>
+                        <select ng-model="data.gender" disabled>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-form-row uk-cleafix">
+                    <label class="uk-form-label uk-cleafix">出生日期</label>
+                    <input type="text" class="uk-width-2-3 uk-float-right uk-margin-right" placeholder="请设置生日"  readonly ng-model="data.birthday" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<!--end: main-->
+
+<script type="text/javascript" src="../../static/lib/bower_components/uikit/js/components/form-select.min.js"></script>
